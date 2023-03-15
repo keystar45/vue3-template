@@ -74,7 +74,7 @@
 <script setup lang="ts">
 import { FormInstance } from "element-plus";
 import { computed, onMounted, ref } from "vue";
-import IconFont from "~/components/IconFont.vue";
+import IconFont from "@/components/IconFont.vue";
 
 const props = defineProps({
   data: {

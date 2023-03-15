@@ -40,7 +40,7 @@
 import { ElLoading } from "element-plus";
 import { debounce } from "lodash";
 import { ref } from "vue";
-import BaseButton from "~/components/base/BaseButton.vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 defineProps({
   dialogVisible: {
