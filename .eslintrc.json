@@ -19,5 +19,39 @@
     "parser": "@typescript-eslint/parser"
   },
   "plugins": ["vue", "@typescript-eslint"],
-  "rules": {}
+  "rules": {
+    "prettier/prettier": "error",
+    "no-debugger": "warn",
+    "no-extra-boolean-cast": "off",
+    "no-async-promise-executor": "off",
+    // indent: [ // 空格
+    //   "error",
+    //   2,
+    //   { FunctionExpression: "off", FunctionDeclaration: "off" },
+    // ],
+    "object-curly-spacing": [
+      2,
+      "always",
+      {
+        "objectsInObjects": true
+      }
+    ],
+    "space-before-blocks": [2, "always"],
+    "space-before-function-paren": 0,
+    "array-bracket-spacing": [2, "never"],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "vue/multi-word-component-names": "off",
+    "vue/no-deprecated-v-on-native-modifier": "off",
+    "vue/no-mutating-props": "off"
+    // "vue/max-attributes-per-line": [2, { // 强制标签每行最大属性数
+    //   "singleline": 10,
+    //   "multiline": {
+    //     "max": 1,
+    //     "allowFirstLine": false
+    //   }
+    // }]
+  }
 }
