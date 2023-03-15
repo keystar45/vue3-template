@@ -1,0 +1,71 @@
+@use "~/styles/variables/dark.scss" as *;
+
+@forward "element-plus/theme-chalk/src/dark/var.scss" with (
+  $colors: (
+    "primary": (
+      "base": $dark-blue,
+    ),
+    "success": (
+      "base": $dark-green-3,
+    ),
+    "warning": (
+      "base": $dark-yellow-3,
+    ),
+    "danger": (
+      "base": $dark-red-3,
+    ),
+    "error": (
+      "base": $dark-red-3,
+    ),
+  ),
+  $text-color: (
+    "primary": $dark-title,
+    "regular": $dark-text,
+    "secondary": $dark-secondary,
+    "placeholder": $dark-placeholder,
+    "disabled": $dark-disabled,
+  ),
+  $border-color: (
+    "darker": rgba(#f5f8ff, 0.35),
+    "dark": rgba(#f5f8ff, 0.3),
+    "": $dark-border,
+    "light": rgba(#f5f8ff, 0.2),
+    "lighter": $dark-border,
+    "extra-light": rgba(185, 205, 255, 0.1),
+  ),
+  $fill-color: (
+    "darker": rgba(#fafcff, 0.2),
+    "dark": rgba(#fafcff, 0.16),
+    "": $dark-interactive-bg,
+    "light": $dark-interactive-hover-bg,
+    "lighter": rgba(#fafcff, 0.04),
+    "extra-light": rgba(#fafcff, 0.02),
+    "blank": transparent,
+  ),
+  $bg-color: (
+    "page": $dark-bg,
+    "": #141414,
+    "overlay": $dark-interactive-active-bg,
+  ),
+  $box-shadow: (
+    "": (
+      0px 12px 32px 4px rgba(0, 0, 0, 0.36),
+      0px 8px 20px rgba(0, 0, 0, 0.72),
+    ),
+    "light": (
+      $dark-shadow,
+    ),
+    "lighter": (
+      0px 0px 6px rgba(0, 0, 0, 0.72),
+    ),
+    "dark": (
+      0px 16px 48px 16px rgba(0, 0, 0, 0.72),
+      0px 12px 32px #000000,
+      0px 8px 16px -8px #000000,
+    ),
+  ),
+  $mask-color: (
+    "": transparent,
+    "extra-light": transparent,
+  )
+);

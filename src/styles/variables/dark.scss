@@ -1,0 +1,135 @@
+$dark-white: #29344e;
+$dark-black: #ffffff;
+
+$dark-text-1: #ffffff;
+$dark-text-2: #ffffff;
+$dark-text-3: rgba(255, 255, 255, 0.6);
+$dark-text-4: rgba(255, 255, 255, 0.4);
+$dark-text-5: #757882;
+
+$dark-gray-1: #505971;
+$dark-gray-2: rgba(137, 205, 255, 0.12);
+$dark-gray-3: #21283b;
+$dark-gray-4: #0d111b;
+$dark-gray-5: #2a3246;
+$dark-gray-6: #1a1f2f;
+$dark-gray-7: #121724;
+$dark-gray-8: #22283c;
+$dark-gray-9: #131929;
+$dark-gray-10: rgba(255, 255, 255, 0.5);
+$dark-gray-11: #181e2c;
+$dark-gray-12: #121724;
+$dark-gray-13: #505971;
+
+$dark-red-3: #f05d4f;
+$dark-red-2: rgba(240, 93, 79, 0.6);
+$dark-red-1: rgba(240, 93, 79, 0.2);
+$dark-red: $dark-red-3;
+
+$dark-yellow-3: #faad14;
+$dark-yellow-2: rgba(250, 173, 20, 0.6);
+$dark-yellow-1: rgba(250, 173, 20, 0.2);
+$dark-yellow: $dark-yellow-3;
+
+$dark-blue-6: #7995ff;
+$dark-blue-5: #536fd9;
+$dark-blue-4: #6283ff;
+$dark-blue-3: #6283ff;
+$dark-blue-2: rgba(98, 131, 255, 0.6);
+$dark-blue-1: rgba(98, 131, 255, 0.2);
+$dark-blue: $dark-blue-3;
+
+$dark-green-3: #00cb50;
+$dark-green-2: rgba(0, 203, 80, 0.6);
+$dark-green-1: rgba(0, 203, 80, 0.2);
+$dark-green: $dark-green-3;
+
+$dark-title: $dark-text-1;
+$dark-text: $dark-text-2;
+$dark-secondary: $dark-text-3;
+$dark-disabled: $dark-text-4;
+$dark-placeholder: $dark-text-5;
+$dark-border: $dark-gray-1;
+$dark-bg: $dark-gray-4;
+$dark-table-header-bg: $dark-gray-5;
+$dark-table-bg: $dark-gray-6;
+$dark-table-hover-bg: $dark-gray-8;
+$dark-draw-bg: $dark-gray-7;
+$dark-dialog-header-bg: $dark-gray-8;
+$dark-dialog-bg: $dark-gray-6;
+$dark-shadow: 0px 2px 16px 0px $dark-gray-4;
+$dark-disabled-bg: $dark-gray-3;
+$dark-interactive-bg: $dark-gray-6;
+$dark-interactive-active-bg: $dark-gray-5;
+$dark-widget-bg: $dark-gray-9;
+$dark-interactive-hover-bg: $dark-gray-2;
+$dark-overlay-bg: $dark-gray-10;
+
+@mixin color-var-dark {
+  --dark--white: #{$dark-white};
+  --dark--black: #{$dark-black};
+
+  --dark--text-1: #{$dark-text-1};
+  --dark--text-2: #{$dark-text-2};
+  --dark--text-3: #{$dark-text-3};
+  --dark--text-4: #{$dark-text-4};
+  --dark--text-5: #{$dark-text-5};
+
+  --dark--gray-1: #{$dark-gray-1};
+  --dark--gray-2: #{$dark-gray-2};
+  --dark--gray-3: #{$dark-gray-3};
+  --dark--gray-4: #{$dark-gray-4};
+  --dark--gray-5: #{$dark-gray-5};
+  --dark--gray-6: #{$dark-gray-6};
+  --dark--gray-7: #{$dark-gray-7};
+  --dark--gray-8: #{$dark-gray-8};
+  --dark--gray-9: #{$dark-gray-9};
+  --dark--gray-10: #{$dark-gray-10};
+  --dark--gray-11: #{$dark-gray-11};
+  --dark--gray-12: #{$dark-gray-12};
+  --dark--gray-13: #{$dark-gray-13};
+
+  --dark--red-3: #{$dark-red-3};
+  --dark--red-2: #{$dark-red-2};
+  --dark--red-1: #{$dark-red-1};
+  --dark--red: var(--dark--red-3);
+
+  --dark--yellow-3: #{$dark-yellow-3};
+  --dark--yellow-2: #{$dark-yellow-2};
+  --dark--yellow-1: #{$dark-yellow-1};
+  --dark--yellow: var(--dark--yellow-3);
+
+  --dark--blue-6: #{$dark-blue-6};
+  --dark--blue-5: #{$dark-blue-5};
+  --dark--blue-4: #{$dark-blue-4};
+  --dark--blue-3: #{$dark-blue-3};
+  --dark--blue-2: #{$dark-blue-2};
+  --dark--blue-1: #{$dark-blue-1};
+  --dark--blue: var(--dark--blue-3);
+
+  --dark--green-3: #{$dark-green-3};
+  --dark--green-2: #{$dark-green-2};
+  --dark--green-1: #{$dark-green-1};
+  --dark--green: var(--dark--green-3);
+
+  --dark--title: var(--dark--text-1);
+  --dark--text: var(--dark--text-2);
+  --dark--secondary: var(--dark--text-3);
+  --dark--disabled: var(--dark--text-4);
+  --dark--placeholder: var(--dark--text-5);
+  --dark--border: var(--dark--gray-1);
+  --dark--table-header-bg: var(--dark--gray-5);
+  --dark--bg: var(--dark--gray-4);
+  --dark--draw-bg: var(--dark--gray-7);
+  --dark--table-bg: var(--dark--gray-6);
+  --dark--table-hover-bg: var(--dark--gray-8);
+  --dark--dialog-header-bg: var(--dark--gray-8);
+  --dark--dialog-bg: var(--dark--gray-6);
+  --dark--shadow: 0px 2px 16px 0px var(--dark--gray-4);
+  --dark--disabled-bg: var(--dark--gray-3);
+  --dark--interactive-bg: var(--dark--gray-6);
+  --dark--interactive-active-bg: var(--dark--gray-5);
+  --dark--widget-bg: var(--dark--gray-9);
+  --dark--interactive-hover-bg: var(--dark--gray-2);
+  --dark--overlay-bg: var(--dark--gray-10);
+}
