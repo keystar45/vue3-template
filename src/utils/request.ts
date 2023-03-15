@@ -1,10 +1,15 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
-import {ElMessage} from 'element-plus';
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+} from "axios";
+import { ElMessage } from "element-plus";
 
-console.log('import.meta.env', import.meta.env);
+console.log("import.meta.env", import.meta.env);
 const request: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL, // API 请求的默认前缀，可根据环境变量自行配置
-  timeout: 60000 // 请求超时时间
+  timeout: 60000, // 请求超时时间
 });
 
 // 异常拦截处理器
@@ -29,9 +34,9 @@ request.interceptors.request.use((config: AxiosRequestConfig) => {
   /**
    * 如果token 存在，则给请求头加token
    */
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem("token");
   if (token) {
-    config.headers['Authorization'] = `Bearer ${JSON.parse(token)}`;
+    config.headers["Authorization"] = `Bearer ${JSON.parse(token)}`;
   }
   console.log(config);
   return config;

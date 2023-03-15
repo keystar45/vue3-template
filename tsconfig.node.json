@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     //几个常用配置
-      "target": "ESNext",// 指定ECMAScript目标版本
-      "useDefineForClassFields": true,// 是否校验TypeScript数据类型
-      "module": "ESNext",// 生成代码的模板标准
-      "removeComments": true,	// 是否删除注释
-      "outDir": "./dist", // 指定输出目录
+    "target": "ESNext", // 指定ECMAScript目标版本
+    "useDefineForClassFields": true, // 是否校验TypeScript数据类型
+    "module": "ESNext", // 生成代码的模板标准
+    "removeComments": true, // 是否删除注释
+    "outDir": "./dist", // 指定输出目录
     //添加如下信息
-      "baseUrl": "./",	// 解析非相对模块的基地址，默认是当前目录
-      "paths": {"@/*": ["src/*"]}	// 路径映射，相对于baseUrl
-    },
+    "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
+    "paths": { "@/*": ["src/*"] } // 路径映射，相对于baseUrl
+  },
   "include": ["vite.config.ts"]
 }

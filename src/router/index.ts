@@ -1,27 +1,27 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '',
+    path: "",
     redirect: (_) => {
-      return {path: '/login'};
-    }
+      return { path: "/login" };
+    },
   },
   {
-    path: '/login',
-    name: 'HelloWorld',
+    path: "/login",
+    name: "HelloWorld",
     component: () => import("@/views/Login.vue"),
   },
 ];
 const router = createRouter({
-  history: createWebHistory(''),
+  history: createWebHistory(""),
   routes,
   scrollBehavior(to, from, savedPosition) {
     return {
-      el: '#app',
+      el: "#app",
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     };
-  }
+  },
 });
 export default router;

@@ -28,20 +28,13 @@
     "noEmit": true,
     // 要包含的类型声明文件名列表
     "types": [],
-    "baseUrl": "./",	// 解析非相对模块的基地址，默认是当前目录
+    "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
     // 模块名到基于 baseUrl的路径映射的列表。
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     // 编译过程中需要引入的库文件的列表。
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable",
-      "ScriptHost"
-    ]
+    "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
