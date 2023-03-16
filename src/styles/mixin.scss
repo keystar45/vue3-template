@@ -1,6 +1,6 @@
-@use "~/styles/variables/light.scss" as *;
-@use "~/styles/variables/dark.scss" as *;
-@use "~/styles/variables/common.scss" as *;
+@use "@/styles/variables/light.scss" as *;
+@use "@/styles/variables/dark.scss" as *;
+@use "@/styles/variables/common.scss" as *;
 
 @mixin color-common-theme {
   --color--red: var(--color--red-3);

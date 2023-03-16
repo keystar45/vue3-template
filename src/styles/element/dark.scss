@@ -1,4 +1,4 @@
-@use "~/styles/variables/dark.scss" as *;
+@use "@/styles/variables/dark.scss" as *;
 
 @forward "element-plus/theme-chalk/src/dark/var.scss" with (
   $colors: (
