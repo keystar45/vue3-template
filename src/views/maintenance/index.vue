@@ -33,29 +33,50 @@
               p-id="26095"
             ></path>
           </svg>
-          <div class="user-name">用户</div>
+          <div class="user-name">{{ userName }}</div>
           <BaseSvg icon="icon-jiantou-xia" />
         </div>
         <template #dropdown>
           <el-dropdown-menu popper-class="title-menu">
-            <el-dropdown-item @click="logout"> 修改密码 </el-dropdown-item>
+            <el-dropdown-item @click="updatePwd"> 修改密码 </el-dropdown-item>
             <el-dropdown-item @click="logout"> 退出登录 </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </header>
     <List />
+    <UpdatePwd :visible="updateVisable" @close="closeUpdate" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import List from "./components/List.vue";
+import UpdatePwd from "./components/UpdatePwd.vue";
+import { useUserStore } from "@/store";
+
+const store = useUserStore();
+
+console.log(store);
 
 const Router = useRouter();
 
+const userName = computed(() => store.userName);
+
+const updateVisable = ref(false);
+
 const logout = () => {
   Router.replace("/login");
+};
+
+const updatePwd = () => {
+  updateVisable.value = true;
+};
+
+const closeUpdate = () => {
+  updateVisable.value = false;
+  store.updateUserName("111111");
 };
 </script>
 
