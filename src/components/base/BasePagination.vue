@@ -76,12 +76,14 @@ function handleCurrentChange(value: number) {
 </script>
 <style lang="scss" scoped>
 .base-pagination {
-  margin: $spacing-s 0;
-  float: right;
+  padding: $spacing-s $spacing-l;
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  border-top: 1px solid #d6dde7;
   &-pager-total {
     font-size: $font-size-m;
   }
-  padding-right: 0;
   &.is-background {
     :deep(.btn-prev),
     :deep(.btn-next) {

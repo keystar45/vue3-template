@@ -7,7 +7,6 @@
       @selection-change="handleSelectionChange"
       @select="handleSelect"
       @select-all="handleSelectAll"
-      :height="realHeight"
       :row-class-name="rowClassName"
       :current-row-key="currentRowKey"
       :max-height="maxHeight"
@@ -98,30 +97,6 @@
         </el-table-column>
       </template>
     </el-table>
-    <el-pagination
-      v-if="height ? showPagination && height > 0 : showPagination"
-      v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
-      :page-sizes="pageSizes"
-      :layout="pageConfig"
-      :background="true"
-      :total="total"
-      class="base-table-pagination"
-    >
-      <template
-        v-if="
-          pageConfig.indexOf('sizes') === -1 &&
-          pageConfig.indexOf('pager') === -1
-        "
-      >
-        <div class="base-table-pager-total">
-          {{ `${currentPage}/${Math.ceil(total / pageSize)}` }}
-        </div>
-      </template>
-      <template v-else>
-        <div class="base-table-pager-total">共{{ total }}条</div>
-      </template>
-    </el-pagination>
   </div>
 </template>
 
@@ -129,7 +104,6 @@
 import { ColumnCls, ElLoading } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import ElTableColumn from "element-plus/es/components/table/src/tableColumn";
-import { isNumber } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { configItem } from "./type";
 
@@ -141,7 +115,6 @@ const props = withDefaults(
     selectable?: (row: any, index: number) => boolean;
     height?: number | string;
     showIndexColumn?: boolean;
-    showPagination?: boolean;
     spanMethod?:
       | ((data: {
           row: any;
@@ -157,11 +130,8 @@ const props = withDefaults(
           | undefined)
       | undefined;
     total?: number;
-    pageSize?: number;
-    pageSizes?: number[];
     maxHeight?: number;
     currentRowKey?: string;
-    pageConfig?: string;
     loading?: boolean;
     highlightCurrentRow?: boolean;
     emptyText?: string;
@@ -173,29 +143,14 @@ const props = withDefaults(
       return true;
     },
     showIndexColumn: false,
-    showPagination: true,
     total: 0,
-    pageSizes: () => [5, 10, 20, 40, 50],
-    pageSize: 10,
     currentRowKey: "",
-    pageConfig: "slot, prev, pager, next, sizes",
     loading: false,
     highlightCurrentRow: false,
     emptyText: "",
   }
 );
 
-const currentPage = ref(1);
-const pageSize = ref(props.pageSize);
-const realHeight = computed(() =>
-  props.showPagination
-    ? props.height
-      ? isNumber(props.height)
-        ? props.height - 36
-        : `calc(${props.height} - 36px)`
-      : props.height
-    : props.height
-);
 const emit = defineEmits([
   "changePageSize",
   "changePageNumber",
@@ -205,27 +160,6 @@ const emit = defineEmits([
   "rowClassName",
   "highLightChange",
 ]);
-
-watch(
-  () => currentPage.value,
-  (val) => {
-    emit("changePageNumber", val);
-  }
-);
-
-watch(
-  () => pageSize.value,
-  (val) => {
-    emit("changePageSize", val);
-  }
-);
-
-watch(
-  () => props.pageSize,
-  (val) => {
-    pageSize.value = val;
-  }
-);
 
 const handleSelectionChange = (event: any) => {
   emit("selectionChange", event);
@@ -289,14 +223,6 @@ const doLayout = () => {
   tableRef.value?.doLayout();
 };
 
-const resetCurrentPage = () => {
-  currentPage.value = 1;
-  setTimeout(() => {
-    if (pageSize.value !== props.pageSize) {
-      pageSize.value = props.pageSize;
-    }
-  });
-};
 const toggleRowSelection = (row, selected) => {
   tableRef.value?.toggleRowSelection(row, selected);
 };
@@ -307,7 +233,6 @@ function filterClick(e: any) {
 
 defineExpose({
   doLayout,
-  resetCurrentPage,
   toggleRowSelection,
   clearSelect,
 });
@@ -325,6 +250,11 @@ onMounted(() => {
   }
   .base-table-pagination-pager-total {
     font-size: $font-size-m;
+  }
+  :deep(.el-table__inner-wrapper) {
+    &::before {
+      content: none;
+    }
   }
   :deep(.el-pagination) {
     padding-right: 0;

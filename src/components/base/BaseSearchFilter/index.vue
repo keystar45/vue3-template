@@ -74,9 +74,7 @@
       </template>
     </div>
     <div class="base-search-filter-btns" v-if="showBtns">
-      <BaseButton type="primary" @click="search">{{
-        t("button.query")
-      }}</BaseButton>
+      <BaseButton type="primary" @click="search">查询</BaseButton>
       <BaseButton type="" @click="reset">重置</BaseButton>
       <BaseButton
         :type="btn.type"
@@ -195,7 +193,7 @@ const focus = (e: any) => {
       @include color("title");
       font-size: $font-size-m;
       padding-right: $spacing-s;
-      text-align: left;
+      text-align: right;
     }
     &_select {
       width: 160px;
