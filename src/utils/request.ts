@@ -3,6 +3,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosError,
+  InternalAxiosRequestConfig,
 } from "axios";
 import { ElMessage } from "element-plus";
 
@@ -30,13 +31,13 @@ const errorHandler = (error: AxiosError) => {
 };
 
 // 前置拦截器（发起请求之前的拦截）
-request.interceptors.request.use((config: AxiosRequestConfig) => {
+request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   /**
    * 如果token 存在，则给请求头加token
    */
   const token = sessionStorage.getItem("token");
   if (token) {
-    config.headers["Authorization"] = `Bearer ${JSON.parse(token)}`;
+    config["Authorization"] = `Bearer ${JSON.parse(token)}`;
   }
   console.log(config);
   return config;

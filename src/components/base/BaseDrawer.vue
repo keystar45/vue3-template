@@ -35,7 +35,7 @@
             @click="submitDrawer"
             v-if="showSubmit"
             :loading="submitLoading"
-            >{{ t("button.submit") }}</BaseButton
+            >确认</BaseButton
           >
           <BaseButton @click="closeDrawer">取消</BaseButton>
         </div>
