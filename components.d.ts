@@ -28,6 +28,10 @@ declare module "@vue/runtime-core" {
     BeyondTooltip: typeof import("./src/components/BeyondTooltip.vue")["default"];
     ContextMenuPanel: typeof import("./src/components/ContextMenuPanel.vue")["default"];
     DeleteTipDialog: typeof import("./src/components/DeleteTipDialog.vue")["default"];
+    ElButton: typeof import("element-plus/es")["ElButton"];
+    ElForm: typeof import("element-plus/es")["ElForm"];
+    ElFormItem: typeof import("element-plus/es")["ElFormItem"];
+    ElInput: typeof import("element-plus/es")["ElInput"];
     IconFont: typeof import("./src/components/IconFont.vue")["default"];
     MainHeader: typeof import("./src/components/base/MainHeader.vue")["default"];
     RadioTabs: typeof import("./src/components/RadioTabs.vue")["default"];

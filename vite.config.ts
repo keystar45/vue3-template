@@ -10,10 +10,14 @@ export default defineConfig({
   plugins: [
     // ...
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: "sass",
+        }),
+      ],
     }),
     vue(),
   ],
@@ -31,7 +35,7 @@ export default defineConfig({
                     @use "@/styles/variables/dark.scss" as *;
                     @use "@/styles/variables/common.scss" as *;
                     @use "@/styles/mixin.scss" as *;
-                    @use "@/styles/element/index.scss";
+                    @use "@/styles/element/index.scss" as *;
                     `,
       },
     },
