@@ -46,7 +46,7 @@
               content="详情"
               placement="top"
             >
-              <BaseSvg icon="icon-a-xiangqingchakan" />
+              <BaseSvg icon="icon-a-xiangqingchakan" @click="detail" />
             </base-tooltip>
             <base-tooltip
               :hide-after="0"
@@ -74,130 +74,33 @@
       :operate="operate"
       @close="closeDelete"
     />
+    <ProductDetail :visible="detailVisible" @close="closeDetail" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
-import { configItem } from "@/components/base/BaseSearchFilter/type";
+import { ref } from "vue";
 import DeleteDialog from "./DeleteDialog.vue";
+import ProductDetail from "./ProductDetail.vue";
+import { useTableData } from "../hooks";
 
-const filterConfigs = reactive<configItem[]>([
-  {
-    type: "input",
-    valueProp: "name",
-    title: "产品名称",
-    placeholder: "请输入",
-  },
-  {
-    type: "select",
-    valueProp: "db",
-    title: "专题库",
-    placeholder: "请选择",
-    selectList: [] as {
-      id: number;
-      name: string;
-    }[],
-  },
-  {
-    type: "select",
-    valueProp: "state",
-    title: "状态",
-    placeholder: "请选择",
-    selectList: [] as {
-      id: number;
-      name: string;
-    }[],
-  },
-]);
-
-const searchModelObj = reactive({
-  name: "",
-  db: "",
-});
-
-const tableData = ref<any[]>([
-  {
-    name: "11111",
-    state: 1,
-  },
-]);
-
-const configs = ref<
-  {
-    prop: any;
-    label: string;
-    width?: string;
-    fixed?: string;
-    sortable?: boolean;
-    slotName?: string;
-    filters?: any;
-    filterFun?: any;
-    minWidth?: any;
-    headerSlot?: string;
-  }[]
->([
-  {
-    label: "产品名称",
-    prop: "name",
-  },
-  {
-    label: "专题库",
-    prop: "name",
-  },
-  {
-    label: "产品提供方",
-    prop: "name",
-  },
-  {
-    label: "产品描述",
-    prop: "name",
-  },
-  {
-    label: "状态",
-    prop: "state",
-    slotName: "state",
-  },
-  {
-    label: "创建人",
-    prop: "name",
-  },
-  {
-    label: "创建时间",
-    prop: "name",
-  },
-  {
-    label: "更新时间",
-    prop: "name",
-  },
-  {
-    label: "操作",
-    prop: "operate",
-    slotName: "operate",
-    fixed: "right",
-    width: "140",
-  },
-]);
-
-const pageInfo = reactive({
-  pageNo: 1,
-  pageSize: 10,
-  total: 10,
-});
-
-const stateEnum = {
-  1: "已上架",
-  2: "待上架",
-};
+const {
+  filterConfigs,
+  searchModelObj,
+  tableData,
+  configs,
+  pageInfo,
+  stateEnum,
+  searchAction,
+  resetAction,
+  pageChange,
+} = useTableData();
 
 const deleteVisible = ref(false);
 
 const operate = ref(1);
 
-const searchAction = () => {};
-const resetAction = () => {};
-
-const pageChange = () => {};
+const detailVisible = ref(false);
 
 const operateHandler = (e: number) => {
   operate.value = e;
@@ -206,6 +109,14 @@ const operateHandler = (e: number) => {
 
 const closeDelete = () => {
   deleteVisible.value = false;
+};
+
+const detail = () => {
+  detailVisible.value = true;
+};
+
+const closeDetail = () => {
+  detailVisible.value = false;
 };
 </script>
 

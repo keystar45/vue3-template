@@ -105,12 +105,12 @@ import { ColumnCls, ElLoading } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import ElTableColumn from "element-plus/es/components/table/src/tableColumn";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
-import { configItem } from "./type";
+import { columnItem } from "./type";
 
 const props = withDefaults(
   defineProps<{
     data: any[];
-    configs: configItem[];
+    configs: columnItem[];
     showSelectColumn?: boolean;
     selectable?: (row: any, index: number) => boolean;
     height?: number | string;

@@ -35,9 +35,9 @@
             @click="submitDrawer"
             v-if="showSubmit"
             :loading="submitLoading"
-            >确认</BaseButton
+            >{{ submitText }}</BaseButton
           >
-          <BaseButton @click="closeDrawer">取消</BaseButton>
+          <BaseButton @click="closeDrawer">{{ cancelText }}</BaseButton>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@ const props = defineProps({
   },
   showOverlay: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   showSubmit: {
     type: Boolean,
@@ -74,6 +74,14 @@ const props = defineProps({
   submitLoading: {
     type: Boolean,
     default: false,
+  },
+  submitText: {
+    type: String,
+    default: "确认",
+  },
+  cancelText: {
+    type: String,
+    default: "取消",
   },
 });
 

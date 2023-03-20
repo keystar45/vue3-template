@@ -3,5 +3,5 @@ module.exports = {
   tabWidth: 2, //缩进长度
   semi: true, //句末使用分号
   singleQuote: true, //使用单引号
-  endOfLine: "auto",
+  endOfLine: "lf",
 };

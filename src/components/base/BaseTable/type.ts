@@ -1,4 +1,4 @@
-export type configItem = {
+export type columnItem = {
   prop: any;
   label: string;
   width?: string;
