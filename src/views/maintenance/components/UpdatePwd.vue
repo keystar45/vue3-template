@@ -140,7 +140,7 @@ const updateCancel = () => {
         }
       }
       &:last-child {
-        margin-bottom: 0;
+        margin-bottom: $spacing-m;
       }
     }
   }
