@@ -2,7 +2,7 @@
   <div class="update-pwd">
     <BaseDialog
       title="修改密码"
-      :width="'480px'"
+      width="480px"
       :dialogVisible="visible"
       :submitLoading="submitLoading"
       @confirm="updateConfirm"

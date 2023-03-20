@@ -120,7 +120,13 @@ const onClick = () => {
     }
   }
   &.blue {
-    @include color("blue-6");
+    @include color("blue");
+    &.is-disabled {
+      opacity: 0.4;
+    }
+  }
+  &.warn {
+    @include color("yellow");
     &.is-disabled {
       opacity: 0.4;
     }

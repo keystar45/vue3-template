@@ -30,7 +30,15 @@
               content="上架"
               placement="top"
             >
-              <BaseSvg icon="icon-xiajia" />
+              <BaseSvg icon="icon-shangjia" @click="operateHandler(1)" />
+            </base-tooltip>
+            <base-tooltip
+              :hide-after="0"
+              effect="light"
+              content="下架"
+              placement="top"
+            >
+              <BaseSvg icon="icon-xiajia" @click="operateHandler(2)" />
             </base-tooltip>
             <base-tooltip
               :hide-after="0"
@@ -54,19 +62,25 @@
               content="删除"
               placement="top"
             >
-              <BaseSvg icon="icon-shanchu" />
+              <BaseSvg icon="icon-shanchu" @click="operateHandler(3)" />
             </base-tooltip>
           </div>
         </template>
       </BaseTable>
       <BasePagination v-model="pageInfo" @pageChange="pageChange" />
     </main>
+    <DeleteDialog
+      :visible="deleteVisible"
+      :operate="operate"
+      @close="closeDelete"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { configItem } from "@/components/base/BaseSearchFilter/type";
+import DeleteDialog from "./DeleteDialog.vue";
 
 const filterConfigs = reactive<configItem[]>([
   {
@@ -176,10 +190,23 @@ const stateEnum = {
   2: "待上架",
 };
 
+const deleteVisible = ref(false);
+
+const operate = ref(1);
+
 const searchAction = () => {};
 const resetAction = () => {};
 
 const pageChange = () => {};
+
+const operateHandler = (e: number) => {
+  operate.value = e;
+  deleteVisible.value = true;
+};
+
+const closeDelete = () => {
+  deleteVisible.value = false;
+};
 </script>
 
 <style lang="scss" scoped>
