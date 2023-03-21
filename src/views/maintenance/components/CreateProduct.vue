@@ -20,6 +20,7 @@
             v-model="config.name"
             placeholder="请输入产品名称"
             maxlength="100"
+            :disabled="!!id"
           />
         </el-form-item>
         <el-form-item label="产品描述:" prop="desc">
@@ -88,6 +89,8 @@
                   :show-file-list="false"
                   :auto-upload="false"
                   :on-change="handleChange"
+                  :before-upload="beforeUpload"
+                  :on-progress="onProgress"
                   ref="uploadRef2"
                 >
                   <BaseSvg icon="icon-shangchuan" />
@@ -99,22 +102,32 @@
           </el-upload>
         </el-form-item>
       </el-form>
+      <div class="hint">
+        支持jpg, jpeg, gif, png，大小限制1M，建议图片比例16:9
+      </div>
     </BaseDrawer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ElMessage } from "element-plus";
-import { ref, reactive } from "vue";
-import type { UploadProps, UploadFile, UploadFiles } from "element-plus";
+import { ref, reactive, watch } from "vue";
+import type {
+  UploadProps,
+  UploadFile,
+  UploadFiles,
+  UploadProgressEvent,
+} from "element-plus";
 import { stopPropagations } from "@/utils/common";
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     visible: boolean;
+    id: string;
   }>(),
   {
     visible: false,
+    id: "",
   }
 );
 
@@ -165,7 +178,7 @@ const formRules = {
   },
   img: {
     required: true,
-    trigger: "change",
+    trigger: "blur",
     message: "请上传产品图片",
   },
 };
@@ -180,29 +193,73 @@ const libList = ref<
 >([]);
 
 const imgType = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
-
+const imgUrl = ref("");
 const uploadRef = ref();
 
 const uploadRef2 = ref();
 
 const emit = defineEmits(["close"]);
 
+watch(
+  () => props.visible,
+  (newVal) => {
+    if (newVal) {
+      if (props.id) {
+        title.value = "编辑产品";
+      } else {
+        title.value = "新增产品";
+      }
+    } else {
+      formRef.value.resetFields();
+      imgUrl.value = "";
+    }
+  }
+);
+
 const handleChange = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
-  console.log("handleChange: ", uploadFile, uploadFiles);
+  console.log(uploadFile.raw, "handleChange: ", uploadFile, uploadFiles);
   if (imgType.indexOf(uploadFile.raw?.type) === -1) {
     ElMessage.error("图片支持jpg, jpeg, gif, png");
-    clearFiles();
+    if (!config.img) {
+      clearFiles();
+    } else {
+      setTimeout(() => {
+        clearFiles();
+        config.img = imgUrl.value;
+      });
+    }
     return;
   } else if (uploadFile.size && uploadFile.size > 1 * 1024 * 1024) {
     ElMessage.error("图片大小限制1MB");
-    clearFiles();
+    if (!config.img) {
+      clearFiles();
+    } else {
+      setTimeout(() => {
+        clearFiles();
+        config.img = imgUrl.value;
+      });
+    }
     return;
   }
-  config.img = URL.createObjectURL(uploadFile.raw!);
+  config.img = URL.createObjectURL(uploadFile.raw);
+  imgUrl.value = URL.createObjectURL(uploadFile.raw);
+  formRef.value.validateField("img");
+  setTimeout(() => {
+    clearFiles();
+    config.img = imgUrl.value;
+  });
+};
+
+const onProgress = (
+  evt: UploadProgressEvent,
+  uploadFile: UploadFile,
+  uploadFiles: UploadFiles
+) => {
+  console.log(evt, uploadFile, uploadFiles);
 };
 
 const handleSuccess: UploadProps["onSuccess"] = (response, uploadFile) => {
-  config.img = URL.createObjectURL(uploadFile.raw!);
+  config.img = URL.createObjectURL(uploadFile.raw);
 };
 
 const beforeUpload: UploadProps["beforeUpload"] = (rawFile) => {
@@ -303,6 +360,13 @@ const addProduct = () => {
       .el-upload-list__item + .el-upload {
         display: none;
       }
+    }
+    .hint {
+      font-size: $font-size-m;
+      color: rgba(41, 52, 78, 0.65);
+      line-height: 18px;
+      padding-left: 110px;
+      // margin-top: $spacing-s;
     }
   }
 }

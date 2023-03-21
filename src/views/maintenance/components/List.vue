@@ -22,7 +22,7 @@
             <div>{{ stateEnum[row.state] }}</div>
           </div>
         </template>
-        <template #operate>
+        <template #operate="{ row }">
           <div class="operate-list">
             <base-tooltip
               :hide-after="0"
@@ -54,7 +54,7 @@
               content="编辑"
               placement="top"
             >
-              <BaseSvg icon="icon-bianji" />
+              <BaseSvg icon="icon-bianji" @click="edit(row.id)" />
             </base-tooltip>
             <base-tooltip
               :hide-after="0"
@@ -75,7 +75,7 @@
       @close="closeDelete"
     />
     <ProductDetail :visible="detailVisible" @close="closeDetail" />
-    <CreateProduct :visible="addVisible" @close="closeAdd" />
+    <CreateProduct :visible="addVisible" :id="currentId" @close="closeAdd" />
   </div>
 </template>
 
@@ -106,6 +106,8 @@ const detailVisible = ref(false);
 
 const addVisible = ref(false);
 
+const currentId = ref("");
+
 const operateHandler = (e: number) => {
   operate.value = e;
   deleteVisible.value = true;
@@ -129,6 +131,12 @@ const addProduct = () => {
 
 const closeAdd = () => {
   addVisible.value = false;
+  currentId.value = "";
+};
+
+const edit = (id: string) => {
+  currentId.value = id;
+  addVisible.value = true;
 };
 </script>
 

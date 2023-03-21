@@ -40,6 +40,7 @@ export const useTableData = () => {
 
   const tableData = ref<any[]>([
     {
+      id: "1",
       name: "11111",
       state: 1,
     },
