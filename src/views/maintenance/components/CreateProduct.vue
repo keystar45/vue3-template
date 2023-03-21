@@ -62,21 +62,6 @@
         <el-form-item label="产品URL:" prop="url">
           <el-input v-model="config.url" placeholder="请输入产品URL" />
         </el-form-item>
-        <!-- <el-form-item label="图片:" prop="img">
-          <el-upload
-            class="avatar-uploader"
-            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-            :auto-upload="false"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :before-upload="beforeUpload"
-            :on-remove="handleRemove"
-          >
-            <img v-if="config.img" :src="config.img" class="avatar" />
-            <BaseSvg icon="icon-tianjia" v-else />
-            <template #file="{ file }"> </template>
-          </el-upload>
-        </el-form-item> -->
         <el-form-item label="图片:" prop="img">
           <el-upload
             class="img-upload"
@@ -89,7 +74,11 @@
             :before-upload="beforeUpload"
             ref="uploadRef"
           >
-            <div class="img-content" v-if="config.img" @click="stopClick">
+            <div
+              class="img-content"
+              v-if="config.img"
+              @click="stopPropagations"
+            >
               <img :src="config.img" />
               <div class="mask">
                 <el-upload
@@ -107,23 +96,6 @@
               </div>
             </div>
             <BaseSvg icon="icon-tianjia" v-else />
-            <!-- <template #file="{ file }">
-              <div class="img-content">
-                <img :src="config.img" />
-                <div class="mask">
-                  <el-upload
-                    action=""
-                    :limit="1"
-                    :show-file-list="false"
-                    :auto-upload="false"
-                    ref="uploadRef2"
-                  >
-                    <BaseSvg icon="icon-shangchuan" />
-                  </el-upload>
-                  <BaseSvg icon="icon-shanchu" @click="clearFiles" />
-                </div>
-              </div>
-            </template> -->
           </el-upload>
         </el-form-item>
       </el-form>
@@ -135,6 +107,8 @@
 import { ElMessage } from "element-plus";
 import { ref, reactive } from "vue";
 import type { UploadProps, UploadFile, UploadFiles } from "element-plus";
+import { stopPropagations } from "@/utils/common";
+
 withDefaults(
   defineProps<{
     visible: boolean;
@@ -212,10 +186,6 @@ const uploadRef = ref();
 const uploadRef2 = ref();
 
 const emit = defineEmits(["close"]);
-
-const stopClick = (e) => {
-  e.stopPropagation();
-};
 
 const handleChange = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
   console.log("handleChange: ", uploadFile, uploadFiles);
