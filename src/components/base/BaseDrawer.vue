@@ -141,7 +141,7 @@ defineExpose({
   right: 0;
   height: 100vh;
   position: fixed;
-  z-index: 3000;
+  z-index: 2000;
   overflow: hidden;
   width: 0;
   &_body {

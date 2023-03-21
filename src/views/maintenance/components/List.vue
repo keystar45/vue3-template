@@ -2,7 +2,7 @@
   <div class="list">
     <header>
       <div>产品列表</div>
-      <BaseButton type="primary">
+      <BaseButton type="primary" @click="addProduct">
         <BaseSvg icon="icon-tianjia" />
         新建产品
       </BaseButton>
@@ -75,6 +75,7 @@
       @close="closeDelete"
     />
     <ProductDetail :visible="detailVisible" @close="closeDetail" />
+    <CreateProduct :visible="addVisible" @close="closeAdd" />
   </div>
 </template>
 
@@ -83,6 +84,7 @@ import { ref } from "vue";
 import DeleteDialog from "./DeleteDialog.vue";
 import ProductDetail from "./ProductDetail.vue";
 import { useTableData } from "../hooks";
+import CreateProduct from "./CreateProduct.vue";
 
 const {
   filterConfigs,
@@ -102,6 +104,8 @@ const operate = ref(1);
 
 const detailVisible = ref(false);
 
+const addVisible = ref(false);
+
 const operateHandler = (e: number) => {
   operate.value = e;
   deleteVisible.value = true;
@@ -117,6 +121,14 @@ const detail = () => {
 
 const closeDetail = () => {
   detailVisible.value = false;
+};
+
+const addProduct = () => {
+  addVisible.value = true;
+};
+
+const closeAdd = () => {
+  addVisible.value = false;
 };
 </script>
 
