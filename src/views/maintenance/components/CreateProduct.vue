@@ -80,7 +80,7 @@
               v-if="config.img"
               @click="stopPropagations"
             >
-              <img :src="config.img" />
+              <img :src="config.img" alt="Base64 Image" />
               <div class="mask">
                 <el-upload
                   class="reupload"

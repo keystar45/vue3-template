@@ -42,6 +42,7 @@
         <div class="value">
           <img
             src="https://img2.baidu.com/it/u=3164536069,133996720&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750"
+            alt="Base64 Image"
           />
         </div>
       </div>
