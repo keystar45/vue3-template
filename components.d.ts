@@ -29,6 +29,8 @@ declare module "@vue/runtime-core" {
     ContextMenuPanel: typeof import("./src/components/ContextMenuPanel.vue")["default"];
     DeleteTipDialog: typeof import("./src/components/DeleteTipDialog.vue")["default"];
     ElButton: typeof import("element-plus/es")["ElButton"];
+    ElCheckbox: typeof import("element-plus/es")["ElCheckbox"];
+    ElCheckboxGroup: typeof import("element-plus/es")["ElCheckboxGroup"];
     ElConfigProvider: typeof import("element-plus/es")["ElConfigProvider"];
     ElDatePicker: typeof import("element-plus/es")["ElDatePicker"];
     ElDialog: typeof import("element-plus/es")["ElDialog"];
@@ -41,7 +43,9 @@ declare module "@vue/runtime-core" {
     ElInput: typeof import("element-plus/es")["ElInput"];
     ElOption: typeof import("element-plus/es")["ElOption"];
     ElPagination: typeof import("element-plus/es")["ElPagination"];
+    ElScrollbar: typeof import("element-plus/es")["ElScrollbar"];
     ElSelect: typeof import("element-plus/es")["ElSelect"];
+    ElSelectV2: typeof import("element-plus/es")["ElSelectV2"];
     ElSwitch: typeof import("element-plus/es")["ElSwitch"];
     ElTable: typeof import("element-plus/es")["ElTable"];
     ElTooltip: typeof import("element-plus/es")["ElTooltip"];
