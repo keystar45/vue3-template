@@ -33,7 +33,9 @@
             <el-dropdown-item @click="Router.push('/login')"
               >宁波电力数据底座</el-dropdown-item
             >
-            <el-dropdown-item>产品超市运维</el-dropdown-item>
+            <el-dropdown-item @click="Router.push('/maintenance')"
+              >产品超市运维</el-dropdown-item
+            >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
