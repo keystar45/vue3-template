@@ -103,7 +103,7 @@ const close = () => {
       color: rgba(41, 51, 78, 0.85);
       line-height: $height-m;
       align-items: flex-start;
-      margin-bottom: $spacing-l;
+      margin-bottom: $spacing-m;
       .label {
         margin-right: $spacing-s;
         width: 96px;

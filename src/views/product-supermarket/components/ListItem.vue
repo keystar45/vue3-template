@@ -3,7 +3,9 @@
     <div class="img-box">
       <img :src="item.img" alt="Base64 Image" />
       <div class="button-box flex">
-        <BaseButton type="primary">查看详情</BaseButton>
+        <BaseButton type="primary" @click="goDetail(item.id, item.name)"
+          >查看详情</BaseButton
+        >
       </div>
     </div>
     <div class="title flex">
@@ -40,14 +42,10 @@ withDefaults(
 
 const Router = useRouter();
 
+const emit = defineEmits(["detail"]);
+
 const goDetail = (id: string, name: string) => {
-  Router.push({
-    name: "dataDirectoryDetail",
-    query: {
-      id,
-      name,
-    },
-  });
+  emit("detail", { id, name });
 };
 </script>
 

@@ -41,15 +41,6 @@ const routes: Array<RouteRecordRaw> = [
           keepAlive: true,
         },
       },
-      {
-        path: "/productSupermarket/detail",
-        name: "productSupermarketDetail",
-        component: () => import("@/views/product-supermarket/Detail.vue"),
-        meta: {
-          "zh-CN": "表详情",
-          "en-US": "Table Details",
-        },
-      },
     ],
   },
 ];
