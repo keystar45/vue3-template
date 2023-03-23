@@ -55,6 +55,7 @@ import { useRouter } from "vue-router";
 import List from "./components/List.vue";
 import UpdatePwd from "./components/UpdatePwd.vue";
 import { useUserStore } from "@/store";
+import { Logout } from "@/apis/login";
 
 const store = useUserStore();
 
@@ -67,7 +68,10 @@ const userName = computed(() => store.userName);
 const updateVisable = ref(false);
 
 const logout = () => {
-  Router.replace("/login");
+  Logout().then((res) => {
+    Router.replace("/login");
+  });
+  // Router.replace("/login");
 };
 
 const updatePwd = () => {

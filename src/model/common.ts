@@ -1,5 +1,3 @@
-import { AxiosResponse } from "axios";
-
 export interface RootObject<T> {
   code: string;
   msg: string;

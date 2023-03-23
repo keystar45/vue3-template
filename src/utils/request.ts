@@ -1,6 +1,5 @@
 import axios, {
   AxiosInstance,
-  AxiosResponse,
   AxiosError,
   InternalAxiosRequestConfig,
 } from "axios";
@@ -8,6 +7,9 @@ import { ElMessage } from "element-plus";
 import { Request } from "@/model/common";
 import { RootObject } from "@/model/common";
 import { RepCodeType } from "@/enum/common";
+import { useUserStore } from "@/store";
+
+const store = useUserStore();
 
 console.log("import.meta.env", import.meta.env);
 console.log(
@@ -91,6 +93,11 @@ request.interceptors.response.use(
 const https = <T, D>(config: Request<D>): Promise<RootObject<T>> => {
   return request.request({
     ...config,
+    headers: config.useToken
+      ? {
+          token: store.token,
+        }
+      : {},
   });
 };
 
