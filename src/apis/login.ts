@@ -1,7 +1,8 @@
 import https from "@/utils/request";
+import { UserInfo } from "@/model/common";
 
 export const loginRequest = (req: { userName: string; password: string }) => {
-  return https<string, { userName: string; password: string }>({
+  return https<{ userName: string; password: string }, UserInfo>({
     url: "/market/user/login",
     method: "post",
     data: req,
@@ -10,7 +11,7 @@ export const loginRequest = (req: { userName: string; password: string }) => {
 };
 
 export const Logout = () => {
-  return https<string, undefined>({
+  return https<undefined, string>({
     url: "/market/user/logout",
     method: "get",
     data: undefined,

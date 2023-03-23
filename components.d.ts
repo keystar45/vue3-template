@@ -40,7 +40,6 @@ declare module "@vue/runtime-core" {
     ElInput: typeof import("element-plus/es")["ElInput"];
     ElOption: typeof import("element-plus/es")["ElOption"];
     ElPagination: typeof import("element-plus/es")["ElPagination"];
-    ElScrollbar: typeof import("element-plus/es")["ElScrollbar"];
     ElSelect: typeof import("element-plus/es")["ElSelect"];
     ElSwitch: typeof import("element-plus/es")["ElSwitch"];
     ElTable: typeof import("element-plus/es")["ElTable"];

@@ -16,10 +16,10 @@
         class="base-table-page_main_search"
       />
       <BaseTable :showPagination="false" :data="tableData" :configs="configs">
-        <template #state="{ row }">
+        <template #pdState="{ row }">
           <div class="state flex">
-            <div :class="`state-${row.state}`"></div>
-            <div>{{ stateEnum[row.state] }}</div>
+            <div :class="`state-${row.pdState}`"></div>
+            <div>{{ stateEnum[row.pdState] }}</div>
           </div>
         </template>
         <template #operate="{ row }">
@@ -29,16 +29,18 @@
               effect="light"
               content="上架"
               placement="top"
+              v-if="!row.pdState"
             >
-              <BaseSvg icon="icon-shangjia" @click="operateHandler(1)" />
+              <BaseSvg icon="icon-shangjia" @click="operateHandler(1, row)" />
             </base-tooltip>
             <base-tooltip
               :hide-after="0"
               effect="light"
               content="下架"
               placement="top"
+              v-else
             >
-              <BaseSvg icon="icon-xiajia" @click="operateHandler(2)" />
+              <BaseSvg icon="icon-xiajia" @click="operateHandler(2, row)" />
             </base-tooltip>
             <base-tooltip
               :hide-after="0"
@@ -62,7 +64,7 @@
               content="删除"
               placement="top"
             >
-              <BaseSvg icon="icon-shanchu" @click="operateHandler(3)" />
+              <BaseSvg icon="icon-shanchu" @click="operateHandler(3, row)" />
             </base-tooltip>
           </div>
         </template>
@@ -72,10 +74,17 @@
     <DeleteDialog
       :visible="deleteVisible"
       :operate="operate"
+      :id="currentId"
+      :title="currentName"
       @close="closeDelete"
     />
-    <ProductDetail :visible="detailVisible" @close="closeDetail" />
-    <CreateProduct :visible="addVisible" :id="currentId" @close="closeAdd" />
+    <ProductDetail
+      :visible="detailVisible"
+      :id="currentId"
+      :title="currentName"
+      @close="closeDetail"
+    />
+    <CreateProduct :visible="addVisible" @close="closeAdd" />
   </div>
 </template>
 
@@ -96,6 +105,7 @@ const {
   searchAction,
   resetAction,
   pageChange,
+  getTableList,
 } = useTableData();
 
 const deleteVisible = ref(false);
@@ -108,13 +118,20 @@ const addVisible = ref(false);
 
 const currentId = ref("");
 
-const operateHandler = (e: number) => {
+const currentName = ref("");
+
+const operateHandler = (e: number, row) => {
+  currentId.value = row.id;
+  currentName.value = row.pdName;
   operate.value = e;
   deleteVisible.value = true;
 };
 
-const closeDelete = () => {
+const closeDelete = (e?: number) => {
   deleteVisible.value = false;
+  if (e) getTableList();
+  currentId.value = "";
+  currentName.value = "";
 };
 
 const detail = () => {
@@ -186,7 +203,7 @@ const edit = (id: string) => {
           height: 100%;
         }
         .state {
-          .state-1 {
+          .state-true {
             width: 8px;
             height: 8px;
             background: #00cb50;
@@ -194,7 +211,7 @@ const edit = (id: string) => {
             border-radius: 4px;
             margin-right: 6px;
           }
-          .state-2 {
+          .state-false {
             width: 8px;
             height: 8px;
             background: #567aff;

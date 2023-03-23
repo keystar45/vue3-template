@@ -1,6 +1,7 @@
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { configItem } from "@/components/base/BaseSearchFilter/type";
 import { columnItem } from "@/components/base/BaseTable/type";
+import { ListCategory, ProductList } from "@/apis/maintenance";
 
 export const useTableData = () => {
   const filterConfigs = reactive<configItem[]>([
@@ -25,7 +26,20 @@ export const useTableData = () => {
       valueProp: "state",
       title: "状态",
       placeholder: "请选择",
-      selectList: [] as {
+      selectList: [
+        {
+          id: "",
+          name: "全部",
+        },
+        {
+          id: 0,
+          name: "待上架",
+        },
+        {
+          id: 1,
+          name: "已上架",
+        },
+      ] as {
         id: number;
         name: string;
       }[],
@@ -38,47 +52,41 @@ export const useTableData = () => {
     state: "",
   });
 
-  const tableData = ref<any[]>([
-    {
-      id: "1",
-      name: "11111",
-      state: 1,
-    },
-  ]);
+  const tableData = ref<any[]>([]);
 
   const configs = ref<columnItem[]>([
     {
       label: "产品名称",
-      prop: "name",
+      prop: "pdName",
     },
     {
       label: "专题库",
-      prop: "name",
+      prop: "categoryName",
     },
     {
       label: "产品提供方",
-      prop: "name",
+      prop: "pdProvider",
     },
     {
       label: "产品描述",
-      prop: "name",
+      prop: "pdDesc",
     },
     {
       label: "状态",
-      prop: "state",
-      slotName: "state",
+      prop: "pdState",
+      slotName: "pdState",
     },
     {
       label: "创建人",
-      prop: "name",
+      prop: "createUser",
     },
     {
       label: "创建时间",
-      prop: "name",
+      prop: "createTime",
     },
     {
       label: "更新时间",
-      prop: "name",
+      prop: "updateTime",
     },
     {
       label: "操作",
@@ -96,8 +104,36 @@ export const useTableData = () => {
   });
 
   const stateEnum = {
-    1: "已上架",
-    2: "待上架",
+    "": "全部",
+    false: "待上架",
+    true: "已上架",
+  };
+
+  const getListCategory = () => {
+    ListCategory().then((res) => {
+      console.log(res);
+      filterConfigs[1].selectList = res.data.map((el) => {
+        return {
+          id: el.id,
+          name: el.categoryName,
+        };
+      });
+    });
+  };
+
+  const getTableList = () => {
+    ProductList({
+      categoryId: searchModelObj.db,
+      pageRequest: {
+        pageNo: pageInfo.pageNo,
+        pageSize: pageInfo.pageSize,
+      },
+      pdName: searchModelObj.name,
+      pdState: searchModelObj.state,
+    }).then((res) => {
+      tableData.value = res.data.records;
+      pageInfo.total = Number(res.data.total);
+    });
   };
 
   const initPageInfo = () => {
@@ -107,12 +143,21 @@ export const useTableData = () => {
 
   const searchAction = () => {
     initPageInfo();
+    getTableList();
   };
   const resetAction = () => {
     initPageInfo();
+    getTableList();
   };
 
-  const pageChange = () => {};
+  const pageChange = () => {
+    getTableList();
+  };
+
+  onMounted(() => {
+    getListCategory();
+    getTableList();
+  });
 
   return {
     filterConfigs,
@@ -124,5 +169,6 @@ export const useTableData = () => {
     searchAction,
     resetAction,
     pageChange,
+    getTableList,
   };
 };

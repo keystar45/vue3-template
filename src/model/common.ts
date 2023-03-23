@@ -10,3 +10,11 @@ export interface Request<T> {
   data: T;
   useToken?: boolean;
 }
+
+export interface UserInfo {
+  id: string;
+  loginName: string;
+  loginPassword: string;
+  token: string;
+  userName: string;
+}

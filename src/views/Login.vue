@@ -75,8 +75,8 @@ const Login = () => {
       password: loginForm.password,
     }).then((res) => {
       ElMessage.success("登录成功");
-      store.setUserName(loginForm.name);
-      store.setToken(res.data);
+      store.setUserName(res.data.loginName);
+      store.setToken(res.data.token);
       Router.push("/maintenance");
     });
   });

@@ -8,7 +8,7 @@ import { Request } from "@/model/common";
 import { RootObject } from "@/model/common";
 import { RepCodeType } from "@/enum/common";
 import { useUserStore } from "@/store";
-
+import Router from "@/router";
 const store = useUserStore();
 
 console.log("import.meta.env", import.meta.env);
@@ -58,7 +58,13 @@ request.interceptors.response.use(
     if (response.data.code === RepCodeType.success) {
       return response.data;
     } else {
-      ElMessage.error(response.data.msg);
+      switch (response.data.code) {
+        case RepCodeType.unauthorized:
+          Router.push("/login");
+          return;
+        default:
+          ElMessage.error(response.data.msg);
+      }
       return Promise.reject(response.data);
     }
   },
@@ -90,7 +96,7 @@ request.interceptors.response.use(
   }
 );
 
-const https = <T, D>(config: Request<D>): Promise<RootObject<T>> => {
+const https = <T, D>(config: Request<T>): Promise<RootObject<D>> => {
   return request.request({
     ...config,
     headers: config.useToken

@@ -32,16 +32,20 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-withDefaults(
+import { Putaway, TakeDown, Remove } from "@/apis/maintenance";
+import { ElMessage } from "element-plus";
+const props = withDefaults(
   defineProps<{
     operate: 1 | 2 | 3 | number;
     visible: boolean;
     title: string;
+    id: string;
   }>(),
   {
     visible: false,
     operate: 1,
     title: "",
+    id: "",
   }
 );
 
@@ -51,12 +55,32 @@ const operateEnum = {
   3: "删除",
 };
 
+const operateFun = {
+  1: Putaway,
+  2: TakeDown,
+  3: Remove,
+};
+
+const operateRes = {
+  1: "上架成功",
+  2: "下架成功",
+  3: "删除成功",
+};
+
 const submitLoading = ref(false);
 
 const emit = defineEmits(["close"]);
 
 const deleteConfirm = () => {
   submitLoading.value = true;
+  operateFun[props.operate]({
+    id: props.id,
+  })
+    .then(() => {
+      ElMessage.success(operateRes[props.operate]);
+      emit("close", 1);
+    })
+    .finally(() => (submitLoading.value = false));
 };
 
 const deleteCancel = () => {
