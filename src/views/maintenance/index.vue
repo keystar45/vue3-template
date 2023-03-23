@@ -76,7 +76,7 @@ const updatePwd = () => {
 
 const closeUpdate = () => {
   updateVisable.value = false;
-  store.updateUserName("111111");
+  store.setUserName("111111");
 };
 </script>
 

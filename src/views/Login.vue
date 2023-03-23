@@ -46,6 +46,14 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
+import { loginRequest } from "@/apis/login";
+import { ElMessage } from "element-plus";
+import { useUserStore } from "@/store";
+import { useRouter } from "vue-router";
+
+const store = useUserStore();
+
+const Router = useRouter();
 
 const loginForm = reactive({
   name: "",
@@ -62,6 +70,15 @@ const rules = ref({
 const Login = () => {
   formRef.value.validate((e: boolean) => {
     if (!e) return;
+    loginRequest({
+      userName: loginForm.name,
+      password: loginForm.password,
+    }).then((res) => {
+      ElMessage.success("登录成功");
+      store.setUserName(loginForm.name);
+      store.setToken(res.data);
+      Router.push("/maintenance");
+    });
   });
 };
 </script>

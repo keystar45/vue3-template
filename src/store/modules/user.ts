@@ -5,13 +5,17 @@ const useStore = defineStore("user", {
   state: () => {
     return {
       userName: "uuuuuuu",
+      token: "",
     };
   },
   // 相当于计算属性
   getters: {},
   actions: {
-    updateUserName(name) {
+    setUserName(name: string) {
       this.userName = name;
+    },
+    setToken(token: string) {
+      this.token = token;
     },
   },
   // 开启数据缓存

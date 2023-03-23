@@ -1,16 +1,26 @@
 import axios, {
   AxiosInstance,
-  AxiosRequestConfig,
   AxiosResponse,
   AxiosError,
   InternalAxiosRequestConfig,
 } from "axios";
 import { ElMessage } from "element-plus";
+import { Request } from "@/model/common";
+import { RootObject } from "@/model/common";
+import { RepCodeType } from "@/enum/common";
 
 console.log("import.meta.env", import.meta.env);
+console.log(
+  import.meta.env,
+  import.meta.env.VITE_BASE_URL_DEFAULT,
+  "import.meta.env.VITE_API_BASE_URL"
+);
 const request: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // API 请求的默认前缀，可根据环境变量自行配置
+  baseURL: import.meta.env.VITE_BASE_URL_DEFAULT, // API 请求的默认前缀，可根据环境变量自行配置
   timeout: 60000, // 请求超时时间
+  // url,
+  // method,
+  // params,
 });
 
 // 异常拦截处理器
@@ -32,24 +42,56 @@ const errorHandler = (error: AxiosError) => {
 
 // 前置拦截器（发起请求之前的拦截）
 request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  /**
-   * 如果token 存在，则给请求头加token
-   */
-  const token = sessionStorage.getItem("token");
-  if (token) {
-    config["Authorization"] = `Bearer ${JSON.parse(token)}`;
-  }
-  console.log(config);
+  console.log(config, "请求拦截");
   return config;
 }, errorHandler);
 
 // 后置拦截器（获取到响应时的拦截）
-request.interceptors.response.use((response: AxiosResponse) => {
-  /**
-   * 根据你的项目实际情况来对 response 和 error 做处理
-   * 这里对 response 和 error 不做任何处理，直接返回
-   */
-  return response.data;
-}, errorHandler);
+request.interceptors.response.use(
+  (response) => {
+    /**
+     * 根据你的项目实际情况来对 response 和 error 做处理
+     */
+    console.log(response.data, "响应拦截");
+    if (response.data.code === RepCodeType.success) {
+      return response.data;
+    } else {
+      ElMessage.error(response.data.msg);
+      return Promise.reject(response.data);
+    }
+  },
+  (error) => {
+    // 对响应错误做点什么
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 401) {
+        // 处理未授权错误
+        ElMessage.error("未授权，请重新登录");
+      } else if (status === 403) {
+        // 处理禁止访问错误
+        ElMessage.error("禁止访问");
+      } else if (status === 404) {
+        // 处理未找到资源错误
+        ElMessage.error("未找到资源");
+      } else if (status >= 500) {
+        // 处理服务器错误
+        ElMessage.error("服务器错误");
+      } else {
+        // 处理其他错误
+        ElMessage.error(data.message);
+      }
+    } else {
+      // 处理请求超时错误
+      ElMessage.error("请求超时，请检查网络");
+    }
+    return Promise.reject(error);
+  }
+);
 
-export default request;
+const https = <T, D>(config: Request<D>): Promise<RootObject<T>> => {
+  return request.request({
+    ...config,
+  });
+};
+
+export default https;
