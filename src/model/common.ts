@@ -9,6 +9,7 @@ export interface Request<T> {
   method: string;
   data: T;
   useToken?: boolean;
+  isBlob?: boolean;
 }
 
 export interface UserInfo {

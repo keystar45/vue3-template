@@ -15,7 +15,12 @@
         @resetAction="resetAction"
         class="base-table-page_main_search"
       />
-      <BaseTable :showPagination="false" :data="tableData" :configs="configs">
+      <BaseTable
+        :showPagination="false"
+        :data="tableData"
+        :configs="configs"
+        v-loading="loadFlag"
+      >
         <template #pdState="{ row }">
           <div class="state flex">
             <div :class="`state-${row.pdState}`"></div>
@@ -48,7 +53,7 @@
               content="详情"
               placement="top"
             >
-              <BaseSvg icon="icon-a-xiangqingchakan" @click="detail" />
+              <BaseSvg icon="icon-a-xiangqingchakan" @click="detail(row)" />
             </base-tooltip>
             <base-tooltip
               :hide-after="0"
@@ -84,7 +89,12 @@
       :title="currentName"
       @close="closeDetail"
     />
-    <CreateProduct :visible="addVisible" @close="closeAdd" />
+    <CreateProduct
+      :visible="addVisible"
+      :id="currentId"
+      :libList="filterConfigs[1].selectList"
+      @close="closeAdd"
+    />
   </div>
 </template>
 
@@ -106,6 +116,7 @@ const {
   resetAction,
   pageChange,
   getTableList,
+  loadFlag,
 } = useTableData();
 
 const deleteVisible = ref(false);
@@ -134,7 +145,8 @@ const closeDelete = (e?: number) => {
   currentName.value = "";
 };
 
-const detail = () => {
+const detail = (row) => {
+  currentId.value = row.id;
   detailVisible.value = true;
 };
 
@@ -146,8 +158,9 @@ const addProduct = () => {
   addVisible.value = true;
 };
 
-const closeAdd = () => {
+const closeAdd = (e?: number) => {
   addVisible.value = false;
+  if (e) getTableList();
   currentId.value = "";
 };
 

@@ -1,11 +1,11 @@
 import https from "@/utils/request";
-import { DataCategoryModel } from "@/model/supermarket";
+import { DataCategoryRes } from "@/model/supermarket";
 
 export const DataCategory = () => {
-  return https<undefined, DataCategoryModel[]>({
+  return https<undefined, DataCategoryRes[]>({
     url: "/market/show/dataCategory",
     method: "get",
     data: undefined,
-    useToken: true,
+    useToken: false,
   });
 };

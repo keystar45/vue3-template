@@ -5,12 +5,12 @@
       <div
         class="item flex"
         v-for="item in resourceList"
-        :class="{ active: resourceType === item.label }"
-        :key="item.label"
-        @click="resourceChange(item.label)"
+        :class="{ active: resourceType === item.categoryName }"
+        :key="item.categoryName"
+        @click="resourceChange(item.categoryName)"
       >
-        <div class="label">{{ item.label }}</div>
-        <div class="num">({{ item.num }})</div>
+        <div class="label">{{ item.categoryName }}</div>
+        <div class="num">({{ item.productNum }})</div>
       </div>
     </aside>
     <main v-show="routerUrl === 'list'">
@@ -50,6 +50,8 @@ import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import ListItem from "./components/ListItem.vue";
 import Detail from "./components/Detail.vue";
+import { DataCategory } from "@/apis/supermarket";
+import { DataCategoryRes } from "@/model/supermarket";
 
 const Router = useRouter();
 const pageInfo = reactive({
@@ -73,25 +75,23 @@ const List = ref([
   },
 ]);
 const loadFlag = ref(false);
-const resourceList = ref([
-  {
-    label: "全部",
-    num: 10,
-  },
-  {
-    label: "电网侧数据",
-    num: 10,
-  },
-  {
-    label: "政务侧数据",
-    num: 10,
-  },
-  {
-    label: "用户侧数据",
-    num: 10,
-  },
-]);
+const resourceList = ref<DataCategoryRes[]>([]);
 const resourceType = ref("全部");
+
+const getDataCategory = () => {
+  DataCategory().then((res) => {
+    resourceList.value = [
+      {
+        categoryName: "全部",
+        id: "",
+        productNum: 0,
+      },
+    ];
+    res.data.forEach((el) => {
+      resourceList.value.push(...el);
+    });
+  });
+};
 
 const getTableList = () => {
   // loadFlag.value = true;
@@ -117,6 +117,7 @@ const goDetail = ({ id, name }) => {
 };
 
 onMounted(() => {
+  getDataCategory();
   getTableList();
 });
 </script>

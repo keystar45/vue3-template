@@ -11,82 +11,121 @@
     >
       <div class="item">
         <div class="label">产品名称:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.pdName }}</div>
       </div>
       <div class="item">
         <div class="label">产品描述:</div>
         <div class="value">
-          xxxhghjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhx
+          {{ config.pdDesc }}
         </div>
       </div>
       <div class="item">
         <div class="label">专题库:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.categoryName }}</div>
       </div>
       <div class="item">
         <div class="label">应用成效:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.effect }}</div>
       </div>
       <div class="item">
         <div class="label">产品提供方:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.pdProvider }}</div>
       </div>
       <div class="item">
         <div class="label">产品URL:</div>
-        <div class="value link" @click="goDetail">
-          http://172.18.1.146:30001/#/dataScreen/dataBase
+        <div class="value link" @click="goDetail(config.pdUrl)">
+          {{ config.pdUrl }}
         </div>
       </div>
       <div class="item">
         <div class="label">图片:</div>
         <div class="value">
-          <img
-            src="https://img2.baidu.com/it/u=3164536069,133996720&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750"
-            alt="Base64 Image"
-          />
+          <img :src="config.pdImage" alt="Base64 Image" />
         </div>
       </div>
       <div class="item">
         <div class="label">状态:</div>
         <div class="value state flex">
-          <div :class="`state-${state}`"></div>
-          <div>{{ stateEnum[state] }}</div>
+          <div :class="`state-${config.pdState}`"></div>
+          <div>{{ stateEnum[config.pdState] }}</div>
         </div>
       </div>
       <div class="item">
         <div class="label">创建人:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.createUser }}</div>
       </div>
       <div class="item">
         <div class="label">创建时间:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.createTime }}</div>
       </div>
     </BaseDrawer>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-withDefaults(
+import { ref, watch, reactive } from "vue";
+import { ProductDetail } from "@/apis/maintenance";
+import { ProductDetailRes } from "@/model/maintenance";
+const props = withDefaults(
   defineProps<{
     visible: boolean;
+    id: string;
   }>(),
   {
     visible: false,
+    id: "",
   }
 );
+
+let config = reactive<ProductDetailRes>({
+  categoryName: "",
+  createTime: "",
+  createUser: "",
+  effect: "",
+  id: 0,
+  pdDesc: "",
+  pdImage: "",
+  pdName: "",
+  pdProvider: "",
+  pdState: true,
+  pdUrl: "",
+});
 
 const emit = defineEmits(["close"]);
 
 const state = ref(1);
 
 const stateEnum = {
-  1: "已上架",
-  2: "待上架",
+  true: "已上架",
+  false: "待上架",
 };
 
-const goDetail = () => {
-  window.open("https://github.com/vuejs/devtools", "_blank");
+const getDetail = (id: string) => {
+  ProductDetail({ id }).then((res) => {
+    for (let key in config) {
+      config[key] = res.data[key];
+    }
+  });
+};
+
+watch(
+  () => props.visible,
+  (newVal) => {
+    if (newVal) {
+      getDetail(props.id);
+    }
+  }
+);
+
+const goDetail = (url: string) => {
+  if (url.includes("http")) {
+    window.open(url, "_blank");
+  } else {
+    console.log(location, "location.protocol");
+    const path = new URL("/111", `${location.protocol}//${location.hostname}`);
+    window.open(path.href, "_blank");
+  }
+  // window.open(`${location.protocol}//${config.pdUrl}`, "_blank");
 };
 
 const close = () => {
@@ -121,7 +160,7 @@ const close = () => {
         cursor: pointer;
       }
       .state {
-        .state-1 {
+        .state-true {
           width: 8px;
           height: 8px;
           background: #00cb50;
@@ -129,7 +168,7 @@ const close = () => {
           border-radius: 4px;
           margin-right: 6px;
         }
-        .state-2 {
+        .state-false {
           width: 8px;
           height: 8px;
           background: #567aff;

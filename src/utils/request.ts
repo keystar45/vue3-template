@@ -11,6 +11,12 @@ import { useUserStore } from "@/store";
 import Router from "@/router";
 const store = useUserStore();
 
+console.log("import.meta.env", import.meta.env);
+console.log(
+  import.meta.env,
+  import.meta.env.VITE_BASE_URL_DEFAULT,
+  "import.meta.env.VITE_API_BASE_URL"
+);
 const request: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL_DEFAULT, // API 请求的默认前缀，可根据环境变量自行配置
   timeout: 60000, // 请求超时时间
@@ -38,7 +44,7 @@ const errorHandler = (error: AxiosError) => {
 
 // 前置拦截器（发起请求之前的拦截）
 request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  console.log(config, "请求拦截");
+  // console.log(config, "请求拦截");
   return config;
 }, errorHandler);
 
@@ -96,6 +102,9 @@ const https = <T, D>(config: Request<T>): Promise<RootObject<D>> => {
     headers: config.useToken
       ? {
           token: store.token,
+          "Content-Type": config?.isBlob
+            ? "multipart/form-data"
+            : "application/json",
         }
       : {},
   });

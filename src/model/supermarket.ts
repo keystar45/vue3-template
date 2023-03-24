@@ -1,5 +1,5 @@
-export interface DataCategoryModel {
+export interface DataCategoryRes {
   categoryName: string;
-  id: number;
-  productNum: number;
+  id: number | string;
+  productNum: number | string;
 }

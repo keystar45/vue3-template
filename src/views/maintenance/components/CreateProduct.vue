@@ -15,17 +15,17 @@
         :rules="formRules"
         ref="formRef"
       >
-        <el-form-item label="产品名称:" prop="name">
+        <el-form-item label="产品名称:" prop="pdName">
           <el-input
-            v-model="config.name"
+            v-model="config.pdName"
             placeholder="请输入产品名称"
             maxlength="100"
             :disabled="!!id"
           />
         </el-form-item>
-        <el-form-item label="产品描述:" prop="desc">
+        <el-form-item label="产品描述:" prop="pdDesc">
           <el-input
-            v-model="config.desc"
+            v-model="config.pdDesc"
             placeholder="请输入产品描述"
             maxlength="1000"
             show-word-limit
@@ -33,19 +33,19 @@
             :rows="4"
           />
         </el-form-item>
-        <el-form-item label="专题库:" prop="lib">
-          <el-select v-model="config.lib" placeholder="请选择专题库">
+        <el-form-item label="专题库:" prop="categoryId">
+          <el-select v-model="config.categoryId" placeholder="请选择专题库">
             <el-option
               v-for="item in libList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="应用成效:" prop="result">
+        <el-form-item label="应用成效:" prop="effect">
           <el-input
-            v-model="config.result"
+            v-model="config.effect"
             placeholder="请输入应用成效"
             maxlength="1000"
             show-word-limit
@@ -53,17 +53,17 @@
             :rows="4"
           />
         </el-form-item>
-        <el-form-item label="产品提供方:" prop="source">
+        <el-form-item label="产品提供方:" prop="pdProvider">
           <el-input
-            v-model="config.source"
+            v-model="config.pdProvider"
             placeholder="请输入产品提供方"
             maxlength="200"
           />
         </el-form-item>
-        <el-form-item label="产品URL:" prop="url">
-          <el-input v-model="config.url" placeholder="请输入产品URL" />
+        <el-form-item label="产品URL:" prop="pdUrl">
+          <el-input v-model="config.pdUrl" placeholder="请输入产品URL" />
         </el-form-item>
-        <el-form-item label="图片:" prop="img">
+        <el-form-item label="图片:" prop="pdImage">
           <el-upload
             class="img-upload"
             action=""
@@ -71,16 +71,14 @@
             :show-file-list="false"
             :auto-upload="false"
             :on-change="handleChange"
-            :on-success="handleSuccess"
-            :before-upload="beforeUpload"
             ref="uploadRef"
           >
             <div
               class="img-content"
-              v-if="config.img"
+              v-if="config.pdImage"
               @click="stopPropagations"
             >
-              <img :src="config.img" alt="Base64 Image" />
+              <img :src="config.pdImage" alt="Base64 Image" />
               <div class="mask">
                 <el-upload
                   class="reupload"
@@ -89,8 +87,6 @@
                   :show-file-list="false"
                   :auto-upload="false"
                   :on-change="handleChange"
-                  :before-upload="beforeUpload"
-                  :on-progress="onProgress"
                   ref="uploadRef2"
                 >
                   <BaseSvg icon="icon-shangchuan" />
@@ -112,22 +108,24 @@
 <script setup lang="ts">
 import { ElMessage } from "element-plus";
 import { ref, reactive, watch } from "vue";
-import type {
-  UploadProps,
-  UploadFile,
-  UploadFiles,
-  UploadProgressEvent,
-} from "element-plus";
+import type { UploadFile, UploadFiles } from "element-plus";
 import { stopPropagations } from "@/utils/common";
+import { UploadImg, AddProduct } from "@/apis/maintenance";
+import { ProductDetail, EditProduct } from "@/apis/maintenance";
 
 const props = withDefaults(
   defineProps<{
     visible: boolean;
     id: string;
+    libList: {
+      id: number;
+      name: string;
+    }[];
   }>(),
   {
     visible: false,
     id: "",
+    libList: () => [],
   }
 );
 
@@ -136,47 +134,47 @@ const title = ref("新建产品");
 const submitLoading = ref(false);
 
 const config = reactive({
-  name: "",
-  desc: "",
-  lib: "",
-  result: "",
-  source: "",
-  url: "",
-  img: "",
+  pdName: "",
+  pdDesc: "",
+  categoryId: "",
+  effect: "",
+  pdProvider: "",
+  pdUrl: "",
+  pdImage: "",
 });
 
 const formRules = {
-  name: {
+  pdName: {
     required: true,
     trigger: "blur",
     message: "请输入产品名称",
   },
-  desc: {
+  pdDesc: {
     required: true,
     trigger: "blur",
     message: "请输入产品描述",
   },
-  lib: {
+  categoryId: {
     required: true,
     trigger: "change",
     message: "请选择专题库",
   },
-  result: {
+  effect: {
     required: true,
     trigger: "blur",
     message: "请输入应用效果",
   },
-  source: {
+  pdProvider: {
     required: true,
     trigger: "blur",
     message: "请输入产品提供方",
   },
-  url: {
+  pdUrl: {
     required: true,
     trigger: "blur",
     message: "请输入产品URL",
   },
-  img: {
+  pdImage: {
     required: true,
     trigger: "blur",
     message: "请上传产品图片",
@@ -184,13 +182,6 @@ const formRules = {
 };
 
 const formRef = ref();
-
-const libList = ref<
-  {
-    label: string;
-    value: string;
-  }[]
->([]);
 
 const imgType = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 const imgUrl = ref("");
@@ -206,8 +197,9 @@ watch(
     if (newVal) {
       if (props.id) {
         title.value = "编辑产品";
+        getDetail();
       } else {
-        title.value = "新增产品";
+        title.value = "新建产品";
       }
     } else {
       formRef.value.resetFields();
@@ -216,72 +208,74 @@ watch(
   }
 );
 
-const handleChange = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+const getDetail = () => {
+  ProductDetail({ id: props.id }).then((res) => {
+    for (let key in config) {
+      config[key] = res.data[key];
+    }
+    imgUrl.value = config.pdImage;
+  });
+};
+
+const handleChange = async (
+  uploadFile: UploadFile,
+  uploadFiles: UploadFiles
+) => {
   console.log(uploadFile.raw, "handleChange: ", uploadFile, uploadFiles);
-  if (imgType.indexOf(uploadFile.raw?.type || "") === -1) {
+  if (imgType.indexOf(uploadFile.raw?.type) === -1) {
     ElMessage.error("图片支持jpg, jpeg, gif, png");
-    if (!config.img) {
+    if (!config.pdImage) {
       clearFiles();
     } else {
       setTimeout(() => {
         clearFiles();
-        config.img = imgUrl.value;
+        config.pdImage = imgUrl.value;
       });
     }
     return;
   } else if (uploadFile.size && uploadFile.size > 1 * 1024 * 1024) {
     ElMessage.error("图片大小限制1MB");
-    if (!config.img) {
+    if (!config.pdImage) {
       clearFiles();
     } else {
       setTimeout(() => {
         clearFiles();
-        config.img = imgUrl.value;
+        config.pdImage = imgUrl.value;
       });
     }
     return;
   }
-  config.img = URL.createObjectURL(uploadFile.raw);
-  imgUrl.value = URL.createObjectURL(uploadFile.raw);
-  formRef.value.validateField("img");
+  // config.pdImage = URL.createObjectURL(uploadFile.raw);
+  // imgUrl.value = URL.createObjectURL(uploadFile.raw);
+  const blob = new Blob([uploadFile.raw], { type: uploadFile.raw.type });
+  const img = await upload(blob);
+  config.pdImage = img;
+  imgUrl.value = img;
+  formRef.value.validateField("pdImage");
   setTimeout(() => {
     clearFiles();
-    config.img = imgUrl.value;
+    config.pdImage = imgUrl.value;
   });
 };
 
-const onProgress = (
-  evt: UploadProgressEvent,
-  uploadFile: UploadFile,
-  uploadFiles: UploadFiles
-) => {
-  console.log(evt, uploadFile, uploadFiles);
-};
-
-const handleSuccess: UploadProps["onSuccess"] = (response, uploadFile) => {
-  config.img = URL.createObjectURL(uploadFile.raw);
-};
-
-const beforeUpload: UploadProps["beforeUpload"] = (rawFile) => {
-  console.log("rawFile.type", rawFile.type);
-  if (imgType.indexOf(rawFile.type) === -1) {
-    ElMessage.error("图片支持jpg, jpeg, gif, png");
-    return false;
-  } else if (rawFile.size / 1024 / 1024 > 1) {
-    ElMessage.error("大小限制1M");
-    return false;
-  }
-  return true;
+const upload = (e: Blob): Promise<string> => {
+  return new Promise((resolve) => {
+    UploadImg({
+      file: e,
+    }).then((res) => {
+      resolve(res.data);
+    });
+  });
 };
 
 const clearFiles = () => {
   uploadRef.value.clearFiles();
   uploadRef2.value.clearFiles();
-  config.img = "";
+  config.pdImage = "";
 };
 
-const close = () => {
-  emit("close");
+const close = (e?: number) => {
+  emit("close", e);
   formRef.value.resetFields();
 };
 
@@ -289,10 +283,24 @@ const addProduct = () => {
   formRef.value.validate((isValid) => {
     if (!isValid) return;
     submitLoading.value = true;
-    setTimeout(() => {
-      submitLoading.value = false;
-      close();
-    }, 2000);
+    let handleFun;
+    let msg;
+    if (props.id) {
+      msg = "产品编辑成功";
+      handleFun = EditProduct;
+    } else {
+      handleFun = AddProduct;
+      msg = "产品新建成功";
+    }
+    handleFun({
+      ...config,
+      id: props.id,
+    })
+      .then(() => {
+        ElMessage.success(msg);
+        close(1);
+      })
+      .finally(() => (submitLoading.value = false));
   });
 };
 </script>

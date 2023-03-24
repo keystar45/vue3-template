@@ -34,3 +34,28 @@ interface UndefinedRecord {
   pdState: boolean;
   updateTime: string;
 }
+
+export interface ProductDetailRes {
+  categoryName: string;
+  createTime: string;
+  createUser: string;
+  effect: string;
+  id: number;
+  pdDesc: string;
+  pdImage: string;
+  pdName: string;
+  pdProvider: string;
+  pdState: boolean;
+  pdUrl: string;
+}
+
+export interface AddProductModel {
+  categoryId: number;
+  effect: string;
+  id?: string;
+  pdDesc: string;
+  pdImage: string;
+  pdName: string;
+  pdProvider: string;
+  pdUrl: string;
+}
