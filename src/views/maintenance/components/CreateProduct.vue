@@ -218,7 +218,7 @@ watch(
 
 const handleChange = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
   console.log(uploadFile.raw, "handleChange: ", uploadFile, uploadFiles);
-  if (imgType.indexOf(uploadFile.raw?.type) === -1) {
+  if (imgType.indexOf(uploadFile.raw?.type || "") === -1) {
     ElMessage.error("图片支持jpg, jpeg, gif, png");
     if (!config.img) {
       clearFiles();

@@ -83,10 +83,12 @@ export const useTableData = () => {
     {
       label: "创建时间",
       prop: "createTime",
+      minWidth: "150",
     },
     {
       label: "更新时间",
       prop: "updateTime",
+      minWidth: "150",
     },
     {
       label: "操作",
