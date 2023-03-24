@@ -45,7 +45,7 @@ export interface ProductDetailRes {
   pdImage: string;
   pdName: string;
   pdProvider: string;
-  pdState: boolean;
+  pdState: boolean | number;
   pdUrl: string;
 }
 

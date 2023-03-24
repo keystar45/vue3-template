@@ -47,7 +47,7 @@
         <div class="label">状态:</div>
         <div class="value state flex">
           <div :class="`state-${config.pdState}`"></div>
-          <div>{{ stateEnum[config.pdState] }}</div>
+          <div>{{ stateEnum[String(config.pdState)] }}</div>
         </div>
       </div>
       <div class="item">
@@ -87,13 +87,11 @@ let config = reactive<ProductDetailRes>({
   pdImage: "",
   pdName: "",
   pdProvider: "",
-  pdState: true,
+  pdState: 1,
   pdUrl: "",
 });
 
 const emit = defineEmits(["close"]);
-
-const state = ref(1);
 
 const stateEnum = {
   true: "已上架",

@@ -46,6 +46,8 @@ export const useTableData = () => {
     },
   ]);
 
+  const loadFlag = ref(false);
+
   const searchModelObj = reactive({
     name: "",
     db: "",
@@ -124,6 +126,7 @@ export const useTableData = () => {
   };
 
   const getTableList = () => {
+    loadFlag.value = true;
     ProductList({
       categoryId: searchModelObj.db,
       pageRequest: {
@@ -132,10 +135,12 @@ export const useTableData = () => {
       },
       pdName: searchModelObj.name,
       pdState: searchModelObj.state,
-    }).then((res) => {
-      tableData.value = res.data.records;
-      pageInfo.total = Number(res.data.total);
-    });
+    })
+      .then((res) => {
+        tableData.value = res.data.records;
+        pageInfo.total = Number(res.data.total);
+      })
+      .finally(() => (loadFlag.value = false));
   };
 
   const initPageInfo = () => {
@@ -172,5 +177,6 @@ export const useTableData = () => {
     resetAction,
     pageChange,
     getTableList,
+    loadFlag,
   };
 };

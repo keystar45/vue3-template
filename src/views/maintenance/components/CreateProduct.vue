@@ -118,7 +118,7 @@ const props = withDefaults(
     visible: boolean;
     id: string;
     libList: {
-      id: number;
+      id: number | string | boolean;
       name: string;
     }[];
   }>(),
@@ -222,7 +222,7 @@ const handleChange = async (
   uploadFiles: UploadFiles
 ) => {
   console.log(uploadFile.raw, "handleChange: ", uploadFile, uploadFiles);
-  if (imgType.indexOf(uploadFile.raw?.type) === -1) {
+  if (imgType.indexOf(uploadFile.raw?.type || "") === -1) {
     ElMessage.error("图片支持jpg, jpeg, gif, png");
     if (!config.pdImage) {
       clearFiles();
@@ -247,7 +247,7 @@ const handleChange = async (
   }
   // config.pdImage = URL.createObjectURL(uploadFile.raw);
   // imgUrl.value = URL.createObjectURL(uploadFile.raw);
-  const blob = new Blob([uploadFile.raw], { type: uploadFile.raw.type });
+  const blob = new Blob([uploadFile.raw || ""], { type: uploadFile.raw?.type });
   const img = await upload(blob);
   config.pdImage = img;
   imgUrl.value = img;

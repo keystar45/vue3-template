@@ -88,7 +88,7 @@ const getDataCategory = () => {
       },
     ];
     res.data.forEach((el) => {
-      resourceList.value.push(...el);
+      resourceList.value.push(el);
     });
   });
 };
