@@ -1,40 +1,36 @@
 <template>
   <div class="list-item">
     <div class="img-box">
-      <img :src="item.img" alt="Base64 Image" />
+      <img :src="item.pdImage" alt="Base64 Image" />
       <div class="button-box flex">
-        <BaseButton type="primary" @click="goDetail(item.id, item.name)"
+        <BaseButton type="primary" @click="goDetail(item.id, item.pdName)"
           >查看详情</BaseButton
         >
       </div>
     </div>
     <div class="title flex">
-      <BeyondTooltip width="100%" :content="item.title" />
+      <BeyondTooltip width="100%" :content="item.pdName" />
     </div>
     <div class="department flex">
-      <BeyondTooltip width="100%" :content="item.name" />
+      <BeyondTooltip width="100%" :content="item.pdProvider" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
+import { UndefinedRecord } from "@/model/supermarket";
 withDefaults(
   defineProps<{
-    item: {
-      id: string;
-      title: string;
-      name: string;
-      img: string;
-    };
+    item: UndefinedRecord;
   }>(),
   {
     item: () => {
       return {
-        id: "1",
-        title: "111",
-        name: "2222222",
-        img: "",
+        id: "",
+        pdProvider: "",
+        pdName: "",
+        pdImage: "",
       };
     },
   }

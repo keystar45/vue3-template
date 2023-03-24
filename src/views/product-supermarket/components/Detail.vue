@@ -5,7 +5,7 @@
         <BaseSvg icon="icon-jiantou-zuo" @click="goBack" />
         <div>{{ name }}</div>
       </div>
-      <BaseButton type="primary" @click="goDetail">
+      <BaseButton type="primary" @click="goDetail(config.pdUrl)">
         <BaseSvg icon="icon-a-xiangqingchakan" />
         查看大屏</BaseButton
       >
@@ -14,28 +14,25 @@
       <div class="item">
         <div class="label">产品描述:</div>
         <div class="value">
-          xxxhghjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhx
+          {{ config.pdDesc }}
         </div>
       </div>
       <div class="item">
         <div class="label">专题库:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.categoryName }}</div>
       </div>
       <div class="item">
         <div class="label">应用成效:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.effect }}</div>
       </div>
       <div class="item">
         <div class="label">产品提供方:</div>
-        <div class="value">xxxx</div>
+        <div class="value">{{ config.pdProvider }}</div>
       </div>
       <div class="item">
         <div class="label">图片:</div>
         <div class="value">
-          <img
-            src="https://img2.baidu.com/it/u=3164536069,133996720&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750"
-            alt="Base64 Image"
-          />
+          <img :src="config.pdImage" alt="Base64 Image" />
         </div>
       </div>
     </div>
@@ -43,6 +40,8 @@
 </template>
 
 <script setup lang="ts">
+import { reactive } from "vue";
+import { Detail } from "@/apis/supermarket";
 withDefaults(
   defineProps<{
     id: string;
@@ -56,13 +55,44 @@ withDefaults(
 
 const emit = defineEmits(["back"]);
 
+const config = reactive({
+  pdDesc: "",
+  categoryName: "",
+  effect: "",
+  pdProvider: "",
+  pdImage: "",
+  pdUrl: "",
+});
+
+const getDetail = (id: string) => {
+  Detail({
+    id,
+  }).then((res) => {
+    for (let key in config) {
+      config[key] = res.data[key];
+    }
+  });
+};
+
 const goBack = () => {
   emit("back");
 };
 
-const goDetail = () => {
-  window.open("https://github.com/vuejs/devtools", "_blank");
+const goDetail = (url: string) => {
+  console.log("111111111", url);
+  if (url.includes("http")) {
+    window.open(url, "_blank");
+  } else {
+    console.log(location, "location.protocol");
+    const path = new URL(url, `${location.protocol}//${location.hostname}`);
+    window.open(path.href, "_blank");
+  }
+  // window.open(`${location.protocol}//${config.pdUrl}`, "_blank");
 };
+
+defineExpose({
+  getDetail,
+});
 </script>
 
 <style lang="scss" scoped>

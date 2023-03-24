@@ -5,9 +5,9 @@
       <div
         class="item flex"
         v-for="item in resourceList"
-        :class="{ active: resourceType === item.categoryName }"
+        :class="{ active: resourceType === item.id }"
         :key="item.categoryName"
-        @click="resourceChange(item.categoryName)"
+        @click="resourceChange(item.id)"
       >
         <div class="label">{{ item.categoryName }}</div>
         <div class="num">({{ item.productNum }})</div>
@@ -16,9 +16,9 @@
     <main v-show="routerUrl === 'list'">
       <div class="search flex">产品超市列表</div>
       <div class="content" v-loading="loadFlag">
-        <el-scrollbar height="100%" v-if="List.length">
+        <el-scrollbar height="100%" v-if="list.length">
           <ListItem
-            v-for="item in List"
+            v-for="item in list"
             :key="item.id"
             :item="item"
             @detail="goDetail"
@@ -40,6 +40,7 @@
       :id="currentId"
       :name="currentName"
       @back="routerUrl = 'list'"
+      ref="detailRef"
     />
   </div>
 </template>
@@ -50,8 +51,8 @@ import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import ListItem from "./components/ListItem.vue";
 import Detail from "./components/Detail.vue";
-import { DataCategory } from "@/apis/supermarket";
-import { DataCategoryRes } from "@/model/supermarket";
+import { DataCategory, List } from "@/apis/supermarket";
+import { DataCategoryRes, UndefinedRecord } from "@/model/supermarket";
 
 const Router = useRouter();
 const pageInfo = reactive({
@@ -66,17 +67,12 @@ const currentId = ref("");
 
 const currentName = ref("");
 
-const List = ref([
-  {
-    id: "1",
-    title: "1119999999999999999999999999999999999999999",
-    name: "22222288888888888888888888888888888888888888888882",
-    img: "https://lmg.jj20.com/up/allimg/1114/062621110J7/210626110J7-10-1200.jpg",
-  },
-]);
+const detailRef = ref();
+
+const list = ref<UndefinedRecord[]>([]);
 const loadFlag = ref(false);
 const resourceList = ref<DataCategoryRes[]>([]);
-const resourceType = ref("全部");
+const resourceType = ref<string | number>("");
 
 const getDataCategory = () => {
   DataCategory().then((res) => {
@@ -89,19 +85,33 @@ const getDataCategory = () => {
     ];
     res.data.forEach((el) => {
       resourceList.value.push(el);
+      resourceList.value[0].productNum =
+        Number(resourceList.value[0].productNum) + Number(el.productNum);
     });
   });
 };
 
 const getTableList = () => {
-  // loadFlag.value = true;
+  loadFlag.value = true;
+  List({
+    categoryIds: resourceType.value === "" ? [] : [resourceType.value],
+    pageRequest: {
+      pageNo: pageInfo.pageNo,
+      pageSize: pageInfo.pageSize,
+    },
+  })
+    .then((res) => {
+      pageInfo.total = Number(res.data.total);
+      list.value = res.data.records;
+    })
+    .finally(() => (loadFlag.value = false));
 };
 
 const pageChange = () => {
   getTableList();
 };
 
-const resourceChange = (e: string) => {
+const resourceChange = (e: string | number) => {
   if (resourceType.value === e) return;
   routerUrl.value = "list";
   resourceType.value = e;
@@ -114,6 +124,7 @@ const goDetail = ({ id, name }) => {
   currentId.value = id;
   currentName.value = name;
   routerUrl.value = "detail";
+  detailRef.value.getDetail(id);
 };
 
 onMounted(() => {

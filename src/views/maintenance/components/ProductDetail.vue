@@ -120,7 +120,7 @@ const goDetail = (url: string) => {
     window.open(url, "_blank");
   } else {
     console.log(location, "location.protocol");
-    const path = new URL("/111", `${location.protocol}//${location.hostname}`);
+    const path = new URL(url, `${location.protocol}//${location.hostname}`);
     window.open(path.href, "_blank");
   }
   // window.open(`${location.protocol}//${config.pdUrl}`, "_blank");
