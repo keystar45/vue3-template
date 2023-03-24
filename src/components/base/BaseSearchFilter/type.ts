@@ -13,7 +13,7 @@ export type datePickerType =
   | "monthrange";
 export type selectListItem = {
   name: string;
-  id: string | number | boolean;
+  id: string | number;
 };
 
 export type configItem = {

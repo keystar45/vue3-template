@@ -118,7 +118,7 @@ const props = withDefaults(
     visible: boolean;
     id: string;
     libList: {
-      id: number | string | boolean;
+      id: number | string;
       name: string;
     }[];
   }>(),
