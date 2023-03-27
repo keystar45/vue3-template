@@ -108,7 +108,7 @@ const getTableList = () => {
 };
 
 const pageChange = () => {
-  getTableList();
+  // getTableList();
 };
 
 const resourceChange = (e: string | number) => {
