@@ -11,7 +11,7 @@
           :class="{ 'is-active': menu.isActive }"
           v-for="menu in menuList"
           :key="menu.title"
-          @click="goMeta"
+          @click="goMeta(menu.isActive)"
         >
           <BaseSvg :icon="menu.icon" />
           <span>{{ menu.title }}</span>
@@ -73,7 +73,8 @@ const getMetaUrl = () => {
   });
 };
 
-const goMeta = () => {
+const goMeta = (e: boolean) => {
+  if (e) return;
   location.href = `${url.value}/#/dataDirectory/list`;
 };
 
