@@ -48,13 +48,18 @@ request.interceptors.response.use(
     /**
      * 根据你的项目实际情况来对 response 和 error 做处理
      */
-    console.log(response.data, "响应拦截");
+    // console.log(response.data, "响应拦截");
     if (response.data.code === RepCodeType.success) {
       return response.data;
     } else {
+      console.log(
+        response.data.code,
+        response.data.code === RepCodeType.unauthorized
+      );
       switch (response.data.code) {
         case RepCodeType.unauthorized:
-          Router.push("/login");
+          console.log(Router);
+          Router.replace("/login");
           return;
         default:
           ElMessage.error(response.data.msg);

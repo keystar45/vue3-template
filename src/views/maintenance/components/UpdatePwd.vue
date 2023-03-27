@@ -60,6 +60,7 @@
 import { ref, reactive, computed } from "vue";
 import { useUserStore } from "@/store";
 import { UpdatePwd } from "@/apis/login";
+import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 defineProps({
   visible: {
@@ -68,6 +69,7 @@ defineProps({
   },
 });
 
+const Router = useRouter();
 const store = useUserStore();
 const userName = computed(() => store.userName);
 const emit = defineEmits(["close"]);
@@ -87,11 +89,22 @@ const formRules = {
     trigger: "blur",
     message: "请输入原密码",
   },
-  newPwd: {
-    required: true,
-    trigger: "blur",
-    message: "请输入新密码",
-  },
+  newPwd: [
+    {
+      required: true,
+      trigger: "blur",
+      message: "请输入新密码",
+    },
+    {
+      validator: (rule, val, callback) => {
+        if (val === config.oldPwd)
+          callback(new Error("新密码与旧密码不能一致"));
+        callback();
+      },
+      required: true,
+      trigger: "blur",
+    },
+  ],
   newPwd2: [
     {
       required: true,
@@ -100,7 +113,6 @@ const formRules = {
     },
     {
       validator: (rule, val, callback) => {
-        console.log(rule, val, config.newPwd, config);
         if (val !== config.newPwd) callback(new Error("两次密码不一致"));
         callback();
       },
@@ -125,6 +137,7 @@ const updateConfirm = () => {
       .then(() => {
         ElMessage.success("密码修改成功");
         updateCancel();
+        Router.replace("/login");
       })
       .finally(() => {
         submitLoading.value = false;
