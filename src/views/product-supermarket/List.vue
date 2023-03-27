@@ -46,15 +46,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMessage } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
 import ListItem from "./components/ListItem.vue";
 import Detail from "./components/Detail.vue";
 import { DataCategory, List } from "@/apis/supermarket";
 import { DataCategoryRes, UndefinedRecord } from "@/model/supermarket";
 
-const Router = useRouter();
 const pageInfo = reactive({
   pageNo: 1,
   pageSize: 10,
@@ -109,6 +106,7 @@ const getTableList = () => {
 
 const pageChange = () => {
   // getTableList();
+  console.log(pageInfo, "pageInfo");
 };
 
 const resourceChange = (e: string | number) => {
