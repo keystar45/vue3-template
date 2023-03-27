@@ -68,7 +68,7 @@ const userName = computed(() => store.userName);
 const updateVisable = ref(false);
 
 const logout = () => {
-  Logout().then((res) => {
+  Logout().then(() => {
     Router.replace("/login");
   });
   // Router.replace("/login");
@@ -80,7 +80,6 @@ const updatePwd = () => {
 
 const closeUpdate = () => {
   updateVisable.value = false;
-  store.setUserName("111111");
 };
 </script>
 

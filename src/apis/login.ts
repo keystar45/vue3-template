@@ -18,3 +18,12 @@ export const Logout = () => {
     useToken: true,
   });
 };
+
+export const UpdatePwd = (req: { oldPassword: string; password: string }) => {
+  return https<{ oldPassword: string; password: string }, undefined>({
+    url: "/market/user/updatePwd",
+    method: "post",
+    data: req,
+    useToken: true,
+  });
+};

@@ -223,7 +223,7 @@ const handleChange = async (
 ) => {
   console.log(uploadFile.raw, "handleChange: ", uploadFile, uploadFiles);
   if (imgType.indexOf(uploadFile.raw?.type || "") === -1) {
-    ElMessage.error("图片支持jpg, jpeg, gif, png");
+    ElMessage.error("图片仅支持jpg, jpeg, gif, png");
     if (!config.pdImage) {
       clearFiles();
     } else {

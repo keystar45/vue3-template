@@ -57,18 +57,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
+import { useUserStore } from "@/store";
+import { UpdatePwd } from "@/apis/login";
+import { ElMessage } from "element-plus";
 defineProps({
   visible: {
     type: Boolean,
     default: false,
   },
-  userName: {
-    type: String,
-    default: "",
-  },
 });
 
+const store = useUserStore();
+const userName = computed(() => store.userName);
 const emit = defineEmits(["close"]);
 
 const submitLoading = ref(false);
@@ -117,10 +118,17 @@ const updateConfirm = () => {
   formRef.value.validate((isValid) => {
     if (!isValid) return;
     submitLoading.value = true;
-    setTimeout(() => {
-      submitLoading.value = false;
-      updateCancel();
-    }, 2000);
+    UpdatePwd({
+      oldPassword: config.oldPwd,
+      password: config.newPwd,
+    })
+      .then(() => {
+        ElMessage.success("密码修改成功");
+        updateCancel();
+      })
+      .finally(() => {
+        submitLoading.value = false;
+      });
   });
 };
 
