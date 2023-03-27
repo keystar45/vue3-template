@@ -136,6 +136,9 @@ onMounted(() => {
         background: $light-blue;
         border-radius: 2px;
         cursor: default;
+        :deep(.svg) {
+          cursor: default;
+        }
       }
     }
   }
