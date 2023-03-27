@@ -52,7 +52,7 @@ import Detail from "./components/Detail.vue";
 import { DataCategory, List } from "@/apis/supermarket";
 import { DataCategoryRes, UndefinedRecord } from "@/model/supermarket";
 
-const pageInfo = reactive({
+let pageInfo = reactive({
   pageNo: 1,
   pageSize: 10,
   total: 10,
