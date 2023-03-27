@@ -7,12 +7,14 @@
       </keep-alive>
       <component :is="Component" :key="route.path" v-if="!keepAlive" />
     </router-view>
+    <Footer />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 
 import { useRoute } from "vue-router";
 

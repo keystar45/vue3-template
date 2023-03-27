@@ -32,3 +32,12 @@ export const Detail = (req: { id: string }) => {
     useToken: false,
   });
 };
+
+export const MetaUrl = () => {
+  return https<undefined, string>({
+    url: "/market/show/getMetaUrl",
+    method: "get",
+    data: undefined,
+    useToken: false,
+  });
+};

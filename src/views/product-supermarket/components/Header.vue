@@ -11,29 +11,32 @@
           :class="{ 'is-active': menu.isActive }"
           v-for="menu in menuList"
           :key="menu.title"
+          @click="goMeta"
         >
           <BaseSvg :icon="menu.icon" />
           <span>{{ menu.title }}</span>
         </div>
       </div>
     </div>
-    <div class="header-right">
-      <BaseButton type="primary">
-        <BaseSvg icon="icon-shujushenqing" />
-        数据申请</BaseButton
-      >
+    <div class="header-right flex">
+      <div class="item flex pointer" @click="goDataApply">
+        <div class="icon">
+          <BaseSvg icon="icon-shujushenqing" />
+        </div>
+        数据申请
+      </div>
       <el-dropdown popper-class="cpcs-popper" trigger="hover">
-        <div class="button">
-          <BaseSvg icon="icon-jinruxitong" />
+        <div class="item flex">
+          <div class="icon">
+            <BaseSvg icon="icon-jinruxitong" />
+          </div>
           进入系统
           <BaseSvg icon="icon-jiantou-xia" colorType="below" />
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="Router.push('/login')"
-              >宁波电力数据底座</el-dropdown-item
-            >
-            <el-dropdown-item @click="Router.push('/maintenance')"
+            <el-dropdown-item @click="goMetaLogin">管理员登录</el-dropdown-item>
+            <el-dropdown-item @click="goMaintenance"
               >产品超市运维</el-dropdown-item
             >
           </el-dropdown-menu>
@@ -44,7 +47,9 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { MetaUrl } from "@/apis/supermarket";
 const Router = useRouter();
 
 const menuList = [
@@ -59,6 +64,37 @@ const menuList = [
     isActive: true,
   },
 ];
+
+const url = ref("");
+
+const getMetaUrl = () => {
+  MetaUrl().then((res) => {
+    url.value = res.data;
+  });
+};
+
+const goMeta = () => {
+  location.href = `${url.value}/#/dataDirectory/list`;
+};
+
+const goDataApply = () => {
+  window.open("http://10.148.222.57/mobile/ToOaSystem.jsp");
+};
+
+const goMetaLogin = () => {
+  window.open(`${url.value}/#/login`);
+};
+
+const goMaintenance = () => {
+  const href = Router.resolve({
+    path: "/maintenance",
+  });
+  window.open(href.href, "_blank");
+};
+
+onMounted(() => {
+  getMetaUrl();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -69,14 +105,15 @@ const menuList = [
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: #0a3b6a;
   &-left {
     .icon {
-      @include color("text");
+      color: #fff;
       font-size: $font-size-xl;
       line-height: $height-m;
       margin-right: 50px;
       :deep(.svg) {
-        color: #545c71;
+        color: #fff;
         font-size: 24px;
         margin-right: $spacing-s;
       }
@@ -87,66 +124,55 @@ const menuList = [
         height: 28px;
         justify-content: center;
         margin-right: $spacing-l;
+        color: #fff;
+        cursor: pointer;
         :deep(.svg) {
           margin-right: 5px;
-          color: #545c71;
+          color: #fff;
         }
       }
       .is-active {
-        background: rgba(41, 51, 78, 0.1);
+        background: $light-blue;
         border-radius: 2px;
+        cursor: default;
       }
     }
   }
   &-right {
-    .button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      height: 26px;
-      white-space: nowrap;
-      cursor: pointer;
-      color: $light-white;
-      text-align: center;
-      box-sizing: border-box;
-      transition: 0.1s;
-      font-weight: var(--el-button-font-weight);
-      user-select: none;
-      background-color: $light-blue;
-      padding: 8px 11px;
-      font-size: 12px;
-      border-radius: 2px;
-      &:hover {
-        background: $light-blue-6;
-      }
-      :deep(.svg) {
-        color: #fff;
-        margin-right: 4px;
+    .item {
+      color: #fff;
+      .icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 12px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: $spacing-s;
+        :deep(.svg) {
+          color: #545c71;
+        }
       }
       :deep(.below) {
         margin-right: 0;
         margin-left: 4px;
+        color: #fff;
       }
     }
-    :deep(.base-button) {
-      .svg {
-        color: #fff;
-        margin-right: 4px;
-      }
-      .below {
-        margin-right: 0;
-        margin-left: 4px;
-      }
+    .pointer {
+      cursor: pointer;
     }
     :deep(.el-dropdown) {
-      margin-left: $spacing-m;
-      .button:focus-visible {
+      margin-left: $spacing-xl;
+      div {
         outline: none;
       }
     }
     :deep(.el-dropdown:focus-visible) {
       box-shadow: none;
       border: none;
+      outline: none;
     }
   }
 }
@@ -157,6 +183,9 @@ const menuList = [
   .el-dropdown-menu__item {
     display: block;
     text-align: center;
+    &:hover {
+      background: rgba(41, 51, 78, 0.06);
+    }
   }
 }
 </style>
