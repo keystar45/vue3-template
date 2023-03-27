@@ -69,7 +69,11 @@
               content="删除"
               placement="top"
             >
-              <BaseSvg icon="icon-shanchu" @click="operateHandler(3, row)" />
+              <BaseSvg
+                icon="icon-shanchu"
+                :disabled="row.pdState"
+                @click="operateHandler(3, row)"
+              />
             </base-tooltip>
           </div>
         </template>
