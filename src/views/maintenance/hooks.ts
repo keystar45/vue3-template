@@ -60,27 +60,36 @@ export const useTableData = () => {
     {
       label: "产品名称",
       prop: "pdName",
+      slotName: "pdName",
+      minWidth: "120",
     },
     {
       label: "专题库",
       prop: "categoryName",
+      minWidth: "120",
     },
     {
       label: "产品提供方",
       prop: "pdProvider",
+      slotName: "pdProvider",
+      minWidth: "120",
     },
     {
       label: "产品描述",
       prop: "pdDesc",
+      slotName: "pdDesc",
+      minWidth: "150",
     },
     {
       label: "状态",
       prop: "pdState",
       slotName: "pdState",
+      minWidth: "100",
     },
     {
       label: "创建人",
       prop: "createUser",
+      minWidth: "100",
     },
     {
       label: "创建时间",

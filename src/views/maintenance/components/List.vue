@@ -21,6 +21,15 @@
         :configs="configs"
         v-loading="loadFlag"
       >
+        <template #pdName="{ row }">
+          <BeyondTooltip width="100%" :content="row.pdName" />
+        </template>
+        <template #pdProvider="{ row }">
+          <BeyondTooltip width="100%" :content="row.pdProvider" />
+        </template>
+        <template #pdDesc="{ row }">
+          <BeyondTooltip width="100%" :content="row.pdDesc" />
+        </template>
         <template #pdState="{ row }">
           <div class="state flex">
             <div :class="`state-${row.pdState}`"></div>
