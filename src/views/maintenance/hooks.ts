@@ -17,7 +17,7 @@ export const useTableData = () => {
       title: "专题库",
       placeholder: "请选择",
       selectList: [] as {
-        id: number;
+        id: string;
         name: string;
       }[],
     },
@@ -121,6 +121,10 @@ export const useTableData = () => {
           id: el.id,
           name: el.categoryName,
         };
+      });
+      filterConfigs[1].selectList.unshift({
+        id: "",
+        name: "全部",
       });
     });
   };
