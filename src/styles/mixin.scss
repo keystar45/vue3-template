@@ -1,0 +1,324 @@
+@use "@/styles/variables/light.scss" as *;
+@use "@/styles/variables/dark.scss" as *;
+@use "@/styles/variables/common.scss" as *;
+
+@mixin color-common-theme {
+  --color--red: var(--color--red-3);
+  --color--yellow: var(--color--yellow-3);
+  --color--blue: var(--color--blue-4);
+  --color--green: var(--color--green-3);
+
+  --color--title: var(--color--text-1);
+  --color--text: var(--color--text-2);
+  --color--secondary: var(--color--text-3);
+  --color--disabled: var(--color--text-5);
+  --color--placeholder: var(--color--text-5);
+  --color--border: var(--color--gray-1);
+  --color--table-header-bg: var(--color--gray-5);
+  --color--draw-bg: var(--color--gray-7);
+  --color--bg: var(--color--gray-4);
+  --color--dialog-header-bg: var(--color--gray-8);
+  --color--disabled-bg: var(--color--gray-3);
+  --color--widget-bg: var(--color--gray-9);
+  --color--interactive-hover-bg: var(--color--gray-2);
+  --color--overlay-bg: var(--color--gray-10);
+  --color--white: var(--light--white);
+  --color--black: var(--light--black);
+  --color--text-1: var(--light--text-1);
+  --color--text-3: var(--light--text-3);
+  --color--text-4: var(--light--text-4);
+  --color--text-2: var(--light--text-2);
+  --color--text-5: var(--light--text-5);
+
+  --color--gray-1: var(--light--gray-1);
+  --color--gray-2: var(--light--gray-2);
+  --color--gray-3: var(--light--gray-3);
+  --color--gray-4: var(--light--gray-4);
+  --color--gray-5: var(--light--gray-5);
+  --color--gray-6: var(--light--gray-6);
+  --color--gray-7: var(--light--gray-7);
+  --color--gray-8: var(--light--gray-8);
+  --color--gray-9: var(--light--gray-9);
+  --color--gray-10: var(--light--gray-10);
+  --color--gray-11: var(--light--gray-11);
+  --color--gray-12: var(--light--gray-12);
+  --color--gray-13: var(--light--gray-13);
+
+  --color--red-3: var(--light--red-3);
+  --color--red-2: var(--light--red-2);
+  --color--red-1: var(--light--red-1);
+
+  --color--yellow-3: var(--light--yellow-3);
+  --color--yellow-2: var(--light--yellow-2);
+  --color--yellow-1: var(--light--yellow-1);
+
+  --color--blue-6: var(--light--blue-6);
+  --color--blue-5: var(--light--blue-5);
+  --color--blue-4: var(--light--blue-4);
+  --color--blue-3: var(--light--blue-3);
+  --color--blue-2: var(--light--blue-2);
+  --color--blue-1: var(--light--blue-1);
+
+  --color--green-3: var(--light--green-3);
+  --color--green-2: var(--light--green-2);
+  --color--green-1: var(--light--green-1);
+
+  --color--shadow: var(--light--shadow);
+
+  --color--dialog-bg: var(--color--white);
+  --color--table-bg: var(--color--white);
+  --color--table-hover-bg: var(--light--blue-1);
+  --color--interactive-bg: var(--color--white);
+  --color--interactive-active-bg: var(--color--white);
+}
+
+@mixin color-light-theme {
+  --color--white: var(--light--white);
+  --color--black: var(--light--black);
+  --color--text-1: var(--light--text-1);
+  --color--text-3: var(--light--text-3);
+  --color--text-4: var(--light--text-4);
+  --color--text-2: var(--light--text-2);
+  --color--text-5: var(--light--text-5);
+
+  --color--gray-1: var(--light--gray-1);
+  --color--gray-2: var(--light--gray-2);
+  --color--gray-3: var(--light--gray-3);
+  --color--gray-4: var(--light--gray-4);
+  --color--gray-5: var(--light--gray-5);
+  --color--gray-6: var(--light--gray-6);
+  --color--gray-7: var(--light--gray-7);
+  --color--gray-8: var(--light--gray-8);
+  --color--gray-9: var(--light--gray-9);
+  --color--gray-10: var(--light--gray-10);
+  --color--gray-11: var(--light--gray-11);
+  --color--gray-12: var(--light--gray-12);
+  --color--gray-13: var(--light--gray-13);
+
+  --color--red-3: var(--light--red-3);
+  --color--red-2: var(--light--red-2);
+  --color--red-1: var(--light--red-1);
+
+  --color--yellow-3: var(--light--yellow-3);
+  --color--yellow-2: var(--light--yellow-2);
+  --color--yellow-1: var(--light--yellow-1);
+
+  --color--blue-6: var(--light--blue-6);
+  --color--blue-5: var(--light--blue-5);
+  --color--blue-4: var(--light--blue-4);
+  --color--blue-3: var(--light--blue-3);
+  --color--blue-2: var(--light--blue-2);
+  --color--blue-1: var(--light--blue-1);
+
+  --color--green-3: var(--light--green-3);
+  --color--green-2: var(--light--green-2);
+  --color--green-1: var(--light--green-1);
+
+  --color--shadow: var(--light--shadow);
+
+  --color--dialog-bg: var(--color--white);
+  --color--table-bg: var(--color--white);
+  --color--table-hover-bg: var(--light--blue-1);
+  --color--interactive-bg: var(--color--white);
+  --color--interactive-active-bg: var(--color--white);
+}
+
+@mixin color-dark-theme {
+  --color--white: var(--dark--white);
+  --color--black: var(--dark--black);
+  --color--text-1: var(--dark--text-1);
+  --color--text-3: var(--dark--text-3);
+  --color--text-4: var(--dark--text-4);
+  --color--text-2: var(--dark--text-2);
+  --color--text-5: var(--dark--text-5);
+
+  --color--gray-1: var(--dark--gray-1);
+  --color--gray-2: var(--dark--gray-2);
+  --color--gray-3: var(--dark--gray-3);
+  --color--gray-4: var(--dark--gray-4);
+  --color--gray-5: var(--dark--gray-5);
+  --color--gray-6: var(--dark--gray-6);
+  --color--gray-7: var(--dark--gray-7);
+  --color--gray-8: var(--dark--gray-8);
+  --color--gray-9: var(--dark--gray-9);
+  --color--gray-10: var(--dark--gray-10);
+  --color--gray-11: var(--dark--gray-11);
+  --color--gray-12: var(--dark--gray-12);
+  --color--gray-13: var(--dark--gray-13);
+
+  --color--red-3: var(--dark--red-3);
+  --color--red-2: var(--dark--red-2);
+  --color--red-1: var(--dark--red-1);
+
+  --color--yellow-3: var(--dark--yellow-3);
+  --color--yellow-2: var(--dark--yellow-2);
+  --color--yellow-1: var(--dark--yellow-1);
+
+  --color--blue-6: var(--dark--blue-6);
+  --color--blue-5: var(--dark--blue-5);
+  --color--blue-4: var(--dark--blue-4);
+  --color--blue-3: var(--dark--blue-3);
+  --color--blue-2: var(--dark--blue-2);
+  --color--blue-1: var(--dark--blue-1);
+
+  --color--green-3: var(--dark--green-3);
+  --color--green-2: var(--dark--green-2);
+  --color--green-1: var(--dark--green-1);
+
+  --color--shadow: var(--dark--shadow);
+
+  --color--dialog-bg: var(--color--gray-6);
+  --color--table-bg: var(--color--gray-6);
+  --color--table-hover-bg: var(--color--gray-8);
+  --color--interactive-bg: var(--color--gray-6);
+  --color--interactive-active-bg: var(--color--gray-5);
+}
+
+@mixin color($cName) {
+  color: var(--color-- + $cName);
+}
+
+@mixin importantColor($cName) {
+  color: var(--color-- + $cName) !important;
+}
+
+@mixin bgColor($cName) {
+  background-color: var(--color-- + $cName);
+}
+
+@mixin importantBgColor($cName) {
+  background-color: var(--color-- + $cName) !important;
+}
+
+@mixin borderColor($cName) {
+  border-color: var(--color-- + $cName);
+}
+
+@mixin border($cName) {
+  border: 1px solid var(--color-- + $cName);
+}
+@mixin borderBottom($cName) {
+  border-bottom: 1px solid var(--color-- + $cName);
+}
+
+@mixin borderTop($cName) {
+  border-top: 1px solid var(--color-- + $cName);
+}
+
+@mixin borderLeft($cName) {
+  border-left: 1px solid var(--color-- + $cName);
+}
+
+@mixin borderRight($cName) {
+  border-right: 1px solid var(--color-- + $cName);
+}
+
+@mixin boxShadow() {
+  box-shadow: var(--color--shadow);
+}
+
+@mixin borderShadow($cName) {
+  box-shadow: 0 0 0 1px var(--color-- + $cName) inset;
+}
+
+@mixin textNew(
+  $fontSize: $font-size-m,
+  $lineHeight: $height-m,
+  $fontWeight: 400
+) {
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  font-weight: $fontWeight;
+}
+
+@mixin textMoreNew(
+  $fontSize: $font-size-m,
+  $lineHeight: $height-m,
+  $fontWeight: 400,
+  $color: $light-text-2
+) {
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  font-weight: $fontWeight;
+  color: $color;
+}
+
+// TOBE REMOVED
+// 字体样式
+@mixin text(
+  $fontSize: 14px,
+  $lineHeight: 20px,
+  $fontWeight: 400,
+  $color: #fff
+) {
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  font-weight: $fontWeight;
+  color: $color;
+}
+
+// flex布局
+@mixin flex($justify: space-between, $align: center) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// 字体样式 包含字体
+@mixin textMore(
+  $fontSize: 14px,
+  $lineHeight: 20px,
+  $fontWeight: 400,
+  $color: rgba(41, 51, 78, 0.65)
+) {
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  font-weight: $fontWeight;
+  color: $color;
+}
+
+@mixin radiusTable($minHeight: 248px) {
+  :deep(.el-table) {
+    min-height: $minHeight;
+    .el-table__header {
+      border-radius: 25px;
+      overflow: hidden;
+    }
+
+    .el-table__inner-wrapper::before {
+      height: 0;
+    }
+
+    tr .cell {
+      line-height: 18px;
+      font-size: $font-size-m;
+      font-weight: normal;
+    }
+
+    tr {
+      th,
+      td {
+        padding: 8px 0;
+
+        &:first-child {
+          padding-left: 12px;
+        }
+
+        &:last-child {
+          padding-right: 12px;
+        }
+      }
+
+      td {
+        border: none;
+        &:first-child {
+          border-radius: 25px 0 0 25px;
+        }
+
+        &:last-child {
+          border-radius: 0 25px 25px 0;
+        }
+      }
+    }
+  }
+}

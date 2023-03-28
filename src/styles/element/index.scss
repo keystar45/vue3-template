@@ -1,0 +1,265 @@
+@use "@/styles/variables/common.scss" as *;
+@use "@/styles/variables/light.scss" as *;
+
+@forward "element-plus/theme-chalk/src/common/var.scss" with (
+  $colors: (
+    "primary": (
+      "base": $light-blue,
+    ),
+    "success": (
+      "base": $light-green-3,
+    ),
+    "warning": (
+      "base": $light-yellow-3,
+    ),
+    "danger": (
+      "base": $light-red-3,
+    ),
+    "error": (
+      "base": $light-red-3,
+    ),
+  ),
+  $text-color: (
+    "primary": $light-title,
+    "regular": $light-text,
+    "secondary": $light-secondary,
+    "placeholder": $light-placeholder,
+    "disabled": $light-disabled,
+  ),
+  $border-color: (
+    "": $light-border,
+    "light": #e4e7ed,
+    "lighter": $light-border,
+    "extra-light": #f2f6fc,
+    "dark": #d4d7de,
+    "darker": #cdd0d6,
+  ),
+  $fill-color: (
+    "": $light-interactive-bg,
+    "light": $light-interactive-active-bg,
+    "lighter": $light-interactive-hover-bg,
+    "extra-light": #fafcff,
+    "dark": #ebedf0,
+    "darker": #e6e8eb,
+    "blank": #ffffff,
+  ),
+  $bg-color: (
+    "": #ffffff,
+    "page": $light-bg,
+    "overlay": #ffffff,
+  ),
+  $border-radius: (
+    "base": 2px,
+    "small": 2px,
+    "round": 20px,
+    "circle": 100%,
+  ),
+  $box-shadow: (
+    "": (
+      0px 12px 32px 4px rgba(0, 0, 0, 0.04),
+      0px 8px 20px rgba(0, 0, 0, 0.08),
+    ),
+    "light": (
+      $light-shadow,
+    ),
+    "lighter": (
+      0px 0px 6px rgba(0, 0, 0, 0.12),
+    ),
+    "dark": (
+      0px 16px 48px 16px rgba(0, 0, 0, 0.08),
+      0px 12px 32px rgba(0, 0, 0, 0.12),
+      0px 8px 16px -8px rgba(0, 0, 0, 0.16),
+    ),
+  ),
+  $font-family: (
+    "":
+      "'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif",
+  ),
+  $font-size: (
+    "extra-large": $font-size-xxl,
+    "large": $font-size-xl,
+    "medium": $font-size-l,
+    "base": $font-size-m,
+    "small": $font-size-m,
+    "extra-small": $font-size-m,
+  ),
+  $disabled: (
+    "bg-color": $light-bg,
+    "text-color": $light-disabled,
+    "border-color": $light-border,
+  ),
+  $common-component-size: (
+    "large": $height-xxxl,
+    "default": $height-xl,
+    "small": $height-m,
+  ),
+  $checkbox: (
+    "font-size": $font-size-m,
+    "input-height": $font-size-m,
+    "input-width": $font-size-m,
+    "text-color": $light-text-1,
+  ),
+  $checkbox-bordered-padding-left: (
+    "large": 12px,
+    "default": 10px,
+    "small": 8px,
+  ),
+  $checkbox-bordered-padding-right: (
+    "large": $spacing-l,
+    "default": $spacing-m,
+    "small": $spacing-s,
+  ),
+  $radio: (
+    "input-height": $font-size-m,
+    "input-width": $font-size-m,
+  ),
+  $radio-bordered-input-height: (
+    "large": $font-size-m,
+    "default": $font-size-s,
+    "small": $font-size-s,
+  ),
+  $radio-bordered-input-width: (
+    "large": $font-size-m,
+    "default": $font-size-s,
+    "small": $font-size-s,
+  ),
+  $select: (
+    "input-font-size": $font-size-m,
+  ),
+  $select-option: (
+    "height": 34px,
+  ),
+  $select-group: (
+    "height": $height-xl,
+    "font-size": $font-size-m,
+  ),
+  $alert: (
+    "padding": $spacing-s $spacing-l,
+    "title-font-size": $font-size-l,
+    "description-font-size": $font-size-m,
+    "close-font-size": $font-size-m,
+    "close-customed-font-size": $font-size-m,
+    "icon-size": $font-size-l,
+    "icon-large-size": $font-size-xxxl,
+  ),
+  $messagebox: (
+    "border-radius": $radius-m,
+    "error-font-size": $font-size-s,
+    "padding-primary": $spacing-m,
+  ),
+  $message: (
+    "padding": $spacing-l,
+    "close-size": $font-size-l,
+  ),
+  $notification: (
+    "padding": $spacing-m $spacing-xxl $spacing-m $spacing-s,
+    "radius": $radius-m,
+    "icon-size": $font-size-xxl,
+    "group-margin-left": $spacing-m,
+    "group-margin-right": $spacing-s,
+    "title-font-size": $font-size-l,
+  ),
+  $input-font-size: (
+    "large": $font-size-xl,
+    "default": $font-size-m,
+    "small": $font-size-m,
+  ),
+  $input-padding-horizontal: (
+    "large": $spacing-l,
+    "default": $spacing-m,
+    "small": $spacing-s,
+  ),
+  $button-font-size: (
+    "large": $font-size-l,
+    "default": $font-size-m,
+    "small": $font-size-s,
+  ),
+  $button-border-radius: (
+    "large": $radius-l,
+    "default": $radius-m,
+    "small": $radius-m,
+  ),
+  $button-padding-vertical: (
+    "large": 13px,
+    "default": 9px,
+    "small": 6px,
+  ),
+  $button-padding-horizontal: (
+    "large": 20px,
+    "default": $spacing-m,
+    "small": $spacing-s,
+  ),
+  $dialog: (
+    "title-font-size": $font-size-l,
+    "content-font-size": $font-size-m,
+    "font-line-height": $height-m,
+    "padding-primary": $spacing-l,
+    "border-radius": $radius-m,
+  ),
+  $table: (
+    "header-bg-color": $light-table-header-bg,
+  ),
+  $table-font-size: (
+    "large": $font-size-xl,
+    "default": $font-size-m,
+    "small": $font-size-s,
+  ),
+  $table-padding: (
+    "large": $font-size-m 0,
+    "default": $spacing-xs 0,
+    "small": $spacing-xs 0,
+  ),
+  $table-cell-padding: (
+    "large": 0 $spacing-l,
+    "default": 0 $spacing-s,
+    "small": 0 $spacing-s,
+  ),
+  $pagination: (
+    "font-size": $font-size-m,
+    "border-radius": $radius-m,
+    "button-width": $height-l,
+    "button-height": $height-l,
+    "height-extra-small": $height-s,
+  ),
+  $popover: (
+    "padding": $spacing-m,
+    "padding-large": $spacing-xl,
+    "title-font-size": $font-size-l,
+    "border-radius": $radius-m,
+  ),
+  $popper: (
+    "border-radius": $radius-m,
+  ),
+  $tag: (
+    "font-size": $font-size-m,
+    "border-radius": $radius-m,
+  ),
+  $tag-height: (
+    "large": $height-xl,
+    "default": $height-m,
+    "small": $height-s,
+  ),
+  $tag-padding: (
+    "large": $spacing-l,
+    "default": $spacing-s,
+    "small": $spacing-s,
+  ),
+  $tag-icon-size: (
+    "large": $font-size-xl,
+    "default": $font-size-m,
+    "small": $font-size-s,
+  ),
+  $menu: (
+    "item-height": 48px,
+    "base-level-padding": $spacing-l,
+    "level-padding": $spacing-l,
+    "icon-width": 20px,
+  ),
+  $tabs: (
+    "header-height": 36px,
+  ),
+  $mask-color: (
+    "": transparent,
+    "extra-light": transparent,
+  )
+);
