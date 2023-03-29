@@ -72,6 +72,7 @@
             :auto-upload="false"
             :on-change="handleChange"
             ref="uploadRef"
+            v-loading="uploadLoad"
           >
             <div
               class="img-content"
@@ -99,7 +100,7 @@
         </el-form-item>
       </el-form>
       <div class="hint">
-        支持jpg, jpeg, gif, png，大小限制1M，建议图片比例16:9
+        支持jpg, jpeg, gif, png，大小限制5M，建议图片比例16:9
       </div>
     </BaseDrawer>
   </div>
@@ -132,6 +133,8 @@ const props = withDefaults(
 const title = ref("新建产品");
 
 const submitLoading = ref(false);
+
+const uploadLoad = ref(false);
 
 const config = reactive({
   pdName: "",
@@ -233,8 +236,8 @@ const handleChange = async (
       });
     }
     return;
-  } else if (uploadFile.size && uploadFile.size > 1 * 1024 * 1024) {
-    ElMessage.error("图片大小限制1MB");
+  } else if (uploadFile.size && uploadFile.size > 5 * 1024 * 1024) {
+    ElMessage.error("图片大小限制5MB");
     if (!config.pdImage) {
       clearFiles();
     } else {
@@ -259,12 +262,15 @@ const handleChange = async (
 };
 
 const upload = (e: Blob): Promise<string> => {
+  uploadLoad.value = true;
   return new Promise((resolve) => {
     UploadImg({
       file: e,
-    }).then((res) => {
-      resolve(res.data);
-    });
+    })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .finally(() => (uploadLoad.value = false));
   });
 };
 
