@@ -20,7 +20,7 @@
           type="primary"
           :disabled="submitDisabled"
           @click="onConfirm"
-          >{{ submitText ? submitText : "确认" }}</BaseButton
+          >{{ submitText ? submitText : "确定" }}</BaseButton
         >
         <BaseButton
           type=""

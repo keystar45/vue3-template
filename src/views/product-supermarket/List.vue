@@ -138,20 +138,33 @@ onMounted(() => {
   display: flex;
   aside {
     width: 320px;
-    height: 200px;
+    height: 205px;
     @include bgColor("white");
     border-radius: 2px;
     margin-right: $spacing-l;
-    padding: $spacing-m $spacing-l;
     box-sizing: border-box;
     .title {
-      color: #29334e;
+      height: 40px;
+      background: rgba(86, 122, 255, 0.15);
+      position: relative;
+      padding-left: 16px;
+      line-height: 40px;
       margin-bottom: $spacing-m;
+      &::before {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 4px;
+        left: 0;
+        top: 0;
+        background: #567aff;
+        color: #29334e;
+      }
     }
     .item {
       height: 32px;
       border-radius: 2px;
-      margin-bottom: $spacing-xs;
+      margin: 0 $spacing-l $spacing-xs $spacing-l;
       padding: 0 10px;
       cursor: pointer;
     }

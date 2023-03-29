@@ -136,7 +136,7 @@ html {
       }
     }
     .cell {
-      line-height: 16px;
+      line-height: 17px;
     }
     .table-tree-header-cell,
     .table-box-header-cell {
@@ -157,7 +157,7 @@ html {
       font-size: $font-size-m;
       line-height: $height-m;
       @include color("text");
-      padding: $spacing-s 0;
+      padding: 11px 0;
     }
     .el-table__expanded-cell {
       padding: 0;

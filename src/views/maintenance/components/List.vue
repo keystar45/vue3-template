@@ -201,6 +201,8 @@ const edit = (id: string) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: $font-size-l;
+    color: #29344e;
     :deep(.base-button) {
       .svg {
         margin-right: $spacing-xs;

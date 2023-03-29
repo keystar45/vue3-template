@@ -51,9 +51,12 @@ const goDetail = (id: string, name: string) => {
   height: 200px;
   box-shadow: 0px 5px 10px 0px rgba(86, 122, 255, 0.1);
   border-radius: 2px;
-  border: 1px solid #567aff;
+  border: 1px solid #dfe1e5;
   margin-right: $spacing-l;
   margin-bottom: $spacing-l;
+  &:hover {
+    border-color: #567aff;
+  }
   .img-box {
     height: 135px;
     position: relative;

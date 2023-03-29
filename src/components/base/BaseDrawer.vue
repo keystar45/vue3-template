@@ -77,7 +77,7 @@ const props = defineProps({
   },
   submitText: {
     type: String,
-    default: "确认",
+    default: "确定",
   },
   cancelText: {
     type: String,

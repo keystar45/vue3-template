@@ -35,7 +35,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <BaseButton type="primary" @click="Login()">登录</BaseButton>
+            <BaseButton type="primary" @click="Login()">登 录</BaseButton>
           </el-form-item>
         </el-form>
       </div>
@@ -112,6 +112,7 @@ const Login = () => {
     box-shadow: 0px 10px 40px 0px rgba(49, 55, 63, 0.06);
     border-radius: 4px;
     display: flex;
+    overflow: hidden;
     &-form {
       width: 481px;
       padding: 80px 0 0 63px;
@@ -136,6 +137,7 @@ const Login = () => {
             align-items: center;
             justify-content: center;
             padding: 0;
+            background: #f2f4fc;
             .svg {
               color: #567aff;
               font-size: 18px;
