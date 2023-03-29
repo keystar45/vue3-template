@@ -105,7 +105,7 @@
     <CreateProduct
       :visible="addVisible"
       :id="currentId"
-      :libList="filterConfigs[1].selectList"
+      :libList="libList"
       @close="closeAdd"
     />
   </div>
@@ -130,6 +130,7 @@ const {
   pageChange,
   getTableList,
   loadFlag,
+  libList,
 } = useTableData();
 
 const deleteVisible = ref(false);

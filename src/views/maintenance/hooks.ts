@@ -48,6 +48,13 @@ export const useTableData = () => {
 
   const loadFlag = ref(false);
 
+  const libList = ref<
+    {
+      id: string | number;
+      name: string;
+    }[]
+  >([]);
+
   const searchModelObj = reactive({
     name: "",
     db: "",
@@ -125,16 +132,19 @@ export const useTableData = () => {
   const getListCategory = () => {
     ListCategory().then((res) => {
       console.log(res);
-      filterConfigs[1].selectList = res.data.map((el) => {
+      libList.value = res.data.map((el) => {
         return {
           id: el.id,
           name: el.categoryName,
         };
       });
-      filterConfigs[1].selectList.unshift({
-        id: "",
-        name: "全部",
-      });
+      filterConfigs[1].selectList = [
+        {
+          id: "",
+          name: "全部",
+        },
+        ...libList.value,
+      ];
     });
   };
 
@@ -191,5 +201,6 @@ export const useTableData = () => {
     pageChange,
     getTableList,
     loadFlag,
+    libList,
   };
 };
