@@ -56,3 +56,9 @@ const isShowTooltip = function (): void {
   // align-items: center;
 }
 </style>
+
+<style lang="scss">
+.base-tooltip {
+  max-width: 800px;
+}
+</style>
