@@ -165,6 +165,7 @@ const detail = (row) => {
 
 const closeDetail = () => {
   detailVisible.value = false;
+  currentId.value = "";
 };
 
 const addProduct = () => {
