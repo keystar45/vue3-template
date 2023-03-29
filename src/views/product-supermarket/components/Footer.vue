@@ -50,6 +50,9 @@ footer {
         color: rgba(255, 255, 255, 0.65);
         margin-left: $spacing-xl;
         cursor: pointer;
+        &:hover {
+          color: #fff;
+        }
       }
     }
   }
