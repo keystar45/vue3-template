@@ -3,7 +3,8 @@
     <nav>
       <div class="left flex">
         <BaseSvg icon="icon-jiantou-zuo" @click="goBack" />
-        <div>{{ name }}</div>
+        <BeyondTooltip max-width="500px" :content="name" />
+        <!-- <div>{{ name }}</div> -->
       </div>
       <BaseButton type="primary" @click="goDetail(config.pdUrl)">
         <BaseSvg icon="icon-a-xiangqingchakan" />
