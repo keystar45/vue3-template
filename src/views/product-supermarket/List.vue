@@ -137,7 +137,7 @@ onMounted(() => {
   padding: $spacing-l;
   display: flex;
   aside {
-    width: 320px;
+    width: 280px;
     height: 205px;
     @include bgColor("white");
     border-radius: 2px;
@@ -170,6 +170,8 @@ onMounted(() => {
     }
     .active {
       background: rgba(41, 52, 78, 0.06);
+      color: $light-blue;
+      font-weight: 600;
     }
   }
   main {
