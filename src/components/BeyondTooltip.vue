@@ -60,5 +60,11 @@ const isShowTooltip = function (): void {
 <style lang="scss">
 .base-tooltip {
   max-width: 800px;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.16);
+  .el-popper__arrow {
+    &::before {
+      border: none !important;
+    }
+  }
 }
 </style>
