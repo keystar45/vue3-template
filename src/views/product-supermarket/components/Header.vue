@@ -26,7 +26,7 @@
         数据申请
       </div>
       <el-dropdown popper-class="cpcs-popper" trigger="hover">
-        <div class="item flex">
+        <div class="item flex pointer">
           <div class="icon">
             <BaseSvg icon="icon-jinruxitong" />
           </div>
