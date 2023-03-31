@@ -23,7 +23,7 @@
         <div class="icon">
           <BaseSvg icon="icon-shujushenqing" />
         </div>
-        数据申请
+        申请流程
       </div>
       <el-dropdown popper-class="cpcs-popper" trigger="hover">
         <div class="item flex pointer">
