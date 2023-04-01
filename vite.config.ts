@@ -49,4 +49,33 @@ export default defineConfig({
       allow: [],
     },
   },
+  build: {
+    target: ["chrome67"],
+    cssTarget: ["chrome67"],
+    chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      //抽离js
+      output: {
+        compact: true,
+        manualChunks: (id) => {
+          if (id.includes("node_modules")) {
+            const module = id
+              .toString()
+              .split("node_modules/")[1]
+              .split("/")[0]
+              .toString();
+            if (["lodash", "lodash-es"].includes(module)) return "lodash";
+            if (["echarts"].includes(module)) return "echarts";
+            if (["csv-parse"].includes(module)) return "csvparse";
+            if (id.includes("element-plus")) return "elementplus";
+            if (
+              ["vue", "vue-router", "vuex", "@vue", "@vueuse"].includes(module)
+            )
+              return "vue";
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
 });
