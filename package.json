@@ -24,6 +24,9 @@
     "vue-router": "^4.0.13"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^17.1.0",
+    "@commitlint/format": "^17.0.0",
+    "conventional-changelog-atom": "^2.0.8",
     "@types/node": "^18.15.3",
     "@typescript-eslint/parser": "^5.55.0",
     "@vitejs/plugin-vue": "^3.2.0",
