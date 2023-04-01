@@ -19,6 +19,7 @@
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 const Router = useRouter();
+import UserDrop from "./UserDrop.vue";
 
 const currentModule = computed(() => {
   return Router.currentRoute.value.matched[0].name;
@@ -104,7 +105,6 @@ const isIndex = computed(
       }
     }
     .logo-image {
-      @include background_image_mixin("header_logo_image", 130px, 20px);
       margin-left: $spacing-l;
     }
     .logo-title {
@@ -205,7 +205,6 @@ const isIndex = computed(
       }
 
       .go-image {
-        @include background_image_mixin("header_go_image", 10px, 10px);
       }
     }
 

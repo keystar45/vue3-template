@@ -14,6 +14,13 @@ const routes: Array<RouteRecordRaw> = [
       title: "登录",
     },
   },
+  {
+    path: "/user",
+    redirect: "/user/list",
+    name: "taskDistributing",
+    component: () => import("@/layout/NormalLayout.vue"),
+    children: UserRouter,
+  },
 ];
 const router = createRouter({
   history: createWebHashHistory(),

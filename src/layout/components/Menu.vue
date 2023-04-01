@@ -24,23 +24,10 @@ const showMenu = computed(() => {
   return menuList.value.some((item) => item.show);
 });
 
-function changeMenuListFromEnv(list: Array<any>, isDev: boolean): Array<any> {
-  return menuListFilter(list, isDev);
-}
-
-function menuListFilter(list, isDev) {
+function menuListFilter(list) {
   return list.map((item: any) => {
     let bool = true;
-    if (item.meta.hideInDev && isDev) {
-      bool = false;
-    }
-    if (item.meta.hideInMenu) {
-      bool = false;
-    }
-    if (item.meta.roleAuth) {
-      bool = false;
-    }
-    item.children && (item.children = menuListFilter(item.children, isDev));
+    item.children && (item.children = menuListFilter(item.children));
     item.show = bool;
     return item;
   });
@@ -85,14 +72,25 @@ watch(
       return findMatchPath(RouterMenus[item], pathVal);
     });
 
+    console.log(
+      "layout-menu",
+      menuList.value,
+      menuKeys,
+      RouterMenus,
+      menuKeys,
+      RouterMenus[menuKeys]
+    );
+
     if (menuKeys) {
-      menuList.value = RouterMenus[menuKeys];
-      const pathArr: string[] = [];
-      matchPathArr(menuList.value, pathArr);
-      // 当存在左侧菜单 并且菜单选中的项不在菜单路径中时，跳转到第一个
-      if (!pathArr.includes(defaultActive.value) && menuKeys) {
-        Router.replace(pathArr[0]);
-      }
+      menuList.value = cloneDeep(RouterMenus[menuKeys]);
+      console.log("999999999999999999", menuList.value);
+      menuList.value = menuListFilter(cloneDeep(RouterMenus[menuKeys]));
+      // const pathArr: string[] = [];
+      // matchPathArr(menuList.value, pathArr);
+      // // 当存在左侧菜单 并且菜单选中的项不在菜单路径中时，跳转到第一个
+      // if (!pathArr.includes(defaultActive.value) && menuKeys) {
+      //   Router.replace(pathArr[0]);
+      // }
     }
   },
   { deep: true, immediate: true }

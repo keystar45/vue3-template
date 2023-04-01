@@ -2,7 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 
 const UserRouter: Array<RouteRecordRaw> = [
   {
-    path: "/user/create",
+    path: "/user/list",
     name: "taskDistributingCreate",
     component: () => import("@/views/user/index.vue"),
     meta: {

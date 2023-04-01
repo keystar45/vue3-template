@@ -24,7 +24,7 @@ const notLayoutMenu = computed(
 const notMenu = computed(() => Router.currentRoute.value.meta.notMenu);
 
 const noAuth = computed(() => {
-  return true;
+  return false;
 });
 </script>
 
