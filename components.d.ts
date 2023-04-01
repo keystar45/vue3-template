@@ -30,29 +30,13 @@ declare module "@vue/runtime-core" {
     DeleteTipDialog: typeof import("./src/components/DeleteTipDialog.vue")["default"];
     ElButton: typeof import("element-plus/es")["ElButton"];
     ElConfigProvider: typeof import("element-plus/es")["ElConfigProvider"];
-    ElDatePicker: typeof import("element-plus/es")["ElDatePicker"];
-    ElDialog: typeof import("element-plus/es")["ElDialog"];
-    ElDropdown: typeof import("element-plus/es")["ElDropdown"];
-    ElDropdownItem: typeof import("element-plus/es")["ElDropdownItem"];
-    ElDropdownMenu: typeof import("element-plus/es")["ElDropdownMenu"];
     ElForm: typeof import("element-plus/es")["ElForm"];
     ElFormItem: typeof import("element-plus/es")["ElFormItem"];
     ElInput: typeof import("element-plus/es")["ElInput"];
-    ElOption: typeof import("element-plus/es")["ElOption"];
-    ElPagination: typeof import("element-plus/es")["ElPagination"];
-    ElScrollbar: typeof import("element-plus/es")["ElScrollbar"];
-    ElSelect: typeof import("element-plus/es")["ElSelect"];
-    ElSwitch: typeof import("element-plus/es")["ElSwitch"];
-    ElTable: typeof import("element-plus/es")["ElTable"];
-    ElTooltip: typeof import("element-plus/es")["ElTooltip"];
-    ElUpload: typeof import("element-plus/es")["ElUpload"];
     IconFont: typeof import("./src/components/IconFont.vue")["default"];
     MainHeader: typeof import("./src/components/base/MainHeader.vue")["default"];
     RadioTabs: typeof import("./src/components/RadioTabs.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import("element-plus/es")["ElLoadingDirective"];
   }
 }

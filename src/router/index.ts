@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import UserRouter from "./modules/user";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,36 +13,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "登录",
     },
-  },
-  {
-    path: "/maintenance",
-    name: "maintenance",
-    component: () => import("@/views/maintenance/index.vue"),
-    meta: {
-      title: "产品超市运维",
-    },
-  },
-  {
-    path: "/productSupermarket",
-    name: "productSupermarket",
-    redirect: "/productSupermarket/list",
-    component: () => import("@/views/product-supermarket/index.vue"),
-    meta: {
-      title: "产品超市列表",
-      keepAlive: true,
-    },
-    children: [
-      {
-        path: "/productSupermarket/list",
-        name: "productSupermarketList",
-        component: () => import("@/views/product-supermarket/List.vue"),
-        meta: {
-          "zh-CN": "产品超市列表",
-          "en-US": "Data Directory List",
-          keepAlive: true,
-        },
-      },
-    ],
   },
 ];
 const router = createRouter({
@@ -64,3 +35,8 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
+
+// 左侧菜单配置
+export const RouterMenus = {
+  "/user": UserRouter,
+};
