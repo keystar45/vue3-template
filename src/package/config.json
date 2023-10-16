@@ -1,0 +1,32 @@
+{
+  "en-US": {
+    "CyberEngine": {
+      "desc": "一站式云原生大数据平台"
+    },
+    "CyberData": {
+      "desc": "一站式多云大数据研发治理平台"
+    },
+    "CyberAI": {
+      "desc": "一站式机器学习生态服务平台"
+    },
+    "welcome": "欢迎回来",
+    "usernameP": "请输入用户名",
+    "passwordP": "请输入密码",
+    "login": "登录"
+  },
+  "zh-CN": {
+    "CyberEngine": {
+      "desc": "One-stop cloud-native big data platform"
+    },
+    "CyberData": {
+      "desc": "One-stop multi-cloud big data R&D management platform"
+    },
+    "CyberAI": {
+      "desc": "One-stop machine learning ecological service platform"
+    },
+    "welcome": "Welcome back",
+    "usernameP": "Please enter user name",
+    "passwordP": "Please enter password",
+    "login": "Log in"
+  }
+}

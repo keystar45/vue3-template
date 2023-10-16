@@ -42,7 +42,7 @@ withDefaults(
 // vite 官方默认的配置，打包后会把图片名加上 hash值，
 // 但是直接通过 :src="imgSrc"方式引入并不会在打包的时候解析，导致开发环境可以正常引入，打包后却不能显示的问题
 function getImageUrl(src: string) {
-  return new URL(`../../assets/${src}`, import.meta.url).href;
+  return new URL(`../assets/${src}`, import.meta.url).href;
 }
 </script>
 

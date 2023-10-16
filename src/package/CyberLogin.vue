@@ -3,10 +3,13 @@
     <div class="login-img" ref="imgBox"></div>
     <div class="login-content">
       <div class="login-content-logo">
-        <BaseImg src="CyberData.png`" width="auto" :height="48"></BaseImg>
+        <BaseImg src="logo.png" width="auto" :height="48"></BaseImg>
       </div>
       <div class="login-content-form">
-        <div class="form-title">Hello! 欢迎回来</div>
+        <div class="form-title">
+          <div>Hello!</div>
+          <div>{{ config[locale].welcome }}</div>
+        </div>
         <el-form ref="formRef" :model="loginForm" :rules="rules">
           <el-form-item prop="name">
             <el-input
@@ -53,6 +56,22 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { ElForm, ElFormItem, ElInput, ElButton } from "element-plus";
+import BaseImg from "@/components/BaseImg.vue";
+import config from "./config.json";
+
+const props = withDefaults(
+  defineProps<{
+    title: "CyberData" | "CyberEngine" | "CyberAI" | "UserCenter";
+    useLocale: boolean;
+    locale?: "zh-CN" | "en-US";
+  }>(),
+  {
+    title: "CyberData",
+    useLocale: true,
+    locale: "zh-CN",
+  }
+);
 
 const formRef = ref();
 
@@ -145,6 +164,17 @@ onMounted(() => {
 
       .form-title {
         margin-bottom: 32px;
+        display: flex;
+        color: #33394c;
+        div:first-child {
+          font-size: 24px;
+          margin-right: 8px;
+        }
+        div:last-child {
+          font-size: 16px;
+          vertical-align: bottom;
+          padding-top: 8px;
+        }
       }
 
       :deep(.el-form) {
@@ -154,6 +184,7 @@ onMounted(() => {
 
         .el-input {
           background: #f2f4f9;
+          width: 360px;
           max-width: none;
           .el-input-group__prepend {
             background: #f2f4f9;
@@ -208,6 +239,7 @@ onMounted(() => {
           border: none;
           margin-top: 26px;
           letter-spacing: 2px;
+          background: rgba(71, 119, 255, 1);
         }
 
         .el-form-item__content .el-button .el-button__text--expand {
