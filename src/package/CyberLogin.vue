@@ -6,7 +6,7 @@
           <div
             class="login-img"
             :style="{
-              backgroundImage: el.img,
+              backgroundImage: `url(${bgImg[el.title]})`,
             }"
           >
             <div class="title">{{ el.title }}</div>
@@ -17,7 +17,7 @@
     </div>
     <div
       class="login-img"
-      :style="{ backgroundImage: `url('/src/assets/${props.title}.png')` }"
+      :style="{ backgroundImage: `url(${bgImg[title]})` }"
       ref="imgBox"
       v-else
     >
@@ -26,7 +26,7 @@
     </div>
     <div class="login-content">
       <div class="login-content-logo">
-        <BaseImg src="logo.png" width="auto" :height="48" />
+        <BaseImg :src="logo" width="auto" :height="48" />
       </div>
       <div class="login-content-form">
         <div class="form-title">
@@ -78,8 +78,8 @@
     <div class="login-switch-language">
       <div class="switch-language" v-if="useLocale">
         <el-tooltip
-          :hide-after="0"
-          effect="dark"
+          :hide-after="200"
+          effect="light"
           :content="'切换为中文'"
           placement="bottom"
         >
@@ -108,8 +108,8 @@
           </svg>
         </el-tooltip>
         <el-tooltip
-          :hide-after="0"
-          effect="dark"
+          :hide-after="200"
+          effect="light"
           :content="'Switch to English'"
           placement="bottom"
         >
@@ -175,10 +175,14 @@ import {
   ElMessage,
   ElCarousel,
   ElCarouselItem,
+  ElDialog,
 } from "element-plus";
 import BaseImg from "@/components/BaseImg.vue";
 import config from "./config.json";
 import { encrypt } from "./encryption";
+import CyberData from "@/assets/CyberData.png";
+import CyberEngine from "@/assets/CyberEngine.png";
+import CyberAI from "@/assets/CyberAI.png";
 
 const props = withDefaults(
   defineProps<{
@@ -187,15 +191,15 @@ const props = withDefaults(
     baseUrl: string;
     locale?: "zh-CN" | "en-US";
     tripartiteTitle?: string;
-    tripartiteLogo?: string;
+    logo?: string;
   }>(),
   {
     title: "UserCenter",
     useLocale: true,
-    baseUrl: "http://172.18.1.146:30201",
+    baseUrl: "http://172.18.1.146:30201/",
     locale: "zh-CN",
     tripartiteTitle: "",
-    tripartiteLogo: "",
+    logo: "logo.png",
   }
 );
 
@@ -290,6 +294,12 @@ const enterList = ref([
     url: "",
   },
 ]);
+
+const bgImg = {
+  CyberData: CyberData,
+  CyberEngine: CyberEngine,
+  CyberAI: CyberAI,
+};
 
 const emit = defineEmits(["updateLanguage", "loginSuccess"]);
 
@@ -732,6 +742,18 @@ onMounted(() => {
         }
       }
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.el-popper.is-light {
+  background: #ffffff;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+  border: none;
+  .el-popper__arrow::before {
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+    border: none;
   }
 }
 </style>
