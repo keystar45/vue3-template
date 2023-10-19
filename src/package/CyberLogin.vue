@@ -196,7 +196,7 @@ const props = withDefaults(
   {
     title: "UserCenter",
     useLocale: true,
-    baseUrl: "http://172.18.1.146:30201/",
+    baseUrl: "http://172.18.1.146:30201",
     locale: "zh-CN",
     tripartiteTitle: "",
     logo: "logo.png",
