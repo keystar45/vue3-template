@@ -1,5 +1,5 @@
 {
-  "en-US": {
+  "zh-CN": {
     "CyberEngine": {
       "desc": "一站式云原生大数据平台"
     },
@@ -12,9 +12,11 @@
     "welcome": "欢迎回来",
     "usernameP": "请输入用户名",
     "passwordP": "请输入密码",
-    "login": "登录"
+    "login": "登录",
+    "dialogTitle": "请选择您要进入的平台",
+    "recentlyUsed": "最近使用"
   },
-  "zh-CN": {
+  "en-US": {
     "CyberEngine": {
       "desc": "One-stop cloud-native big data platform"
     },
@@ -27,6 +29,8 @@
     "welcome": "Welcome back",
     "usernameP": "Please enter user name",
     "passwordP": "Please enter password",
-    "login": "Log in"
+    "login": "Log in",
+    "dialogTitle": "Please select the platform you want to enter",
+    "recentlyUsed": "Recently Used"
   }
 }
