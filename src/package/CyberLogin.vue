@@ -1,6 +1,6 @@
 <template>
   <div class="cyber-login">
-    <div class="login-img" ref="imgBox" v-if="title === 'UserCenter'">
+    <div class="login-img" ref="imgBox" v-if="productKey === 'UserCenter'">
       <el-carousel trigger="click" arrow="never" :interval="5000">
         <el-carousel-item v-for="el in carouselList" :key="el.title">
           <div
@@ -17,23 +17,35 @@
     </div>
     <div
       class="login-img"
-      :style="{ backgroundImage: `url(${bgImg[title]})` }"
+      :style="{ backgroundImage: `url(${bgImg[productKey]})` }"
       ref="imgBox"
       v-else
     >
-      <div class="title">{{ tripartiteTitle || title }}</div>
-      <div class="desc">{{ config?.[locale]?.[title]?.desc }}</div>
+      <div class="title" v-show="showLogo">
+        {{ title || productKey }}
+      </div>
+      <div class="desc">{{ config?.[locale]?.[productKey]?.desc }}</div>
     </div>
     <div class="login-content">
       <div class="login-content-logo">
-        <BaseImg :src="logo" width="auto" :height="48" />
+        <!-- <BaseImg :src="logo" width="auto" :height="48" /> -->
+        <el-image
+          style="width: auto; height: 48px"
+          :src="logo || logoImg"
+          v-show="showLogo"
+        />
       </div>
       <div class="login-content-form">
         <div class="form-title">
           <div>Hello!</div>
           <div>{{ config[locale].welcome }}</div>
         </div>
-        <el-form ref="formRef" :model="loginForm" :rules="rules">
+        <el-form
+          ref="formRef"
+          :model="loginForm"
+          :rules="rules"
+          v-if="!autoLogin"
+        >
           <el-form-item prop="name">
             <el-input
               v-model="loginForm.name"
@@ -73,6 +85,13 @@
             </el-button>
           </el-form-item>
         </el-form>
+        <div v-else class="flex">
+          <div
+            v-loading="autoLoginLoading"
+            style="height: 40px; width: 40px"
+          ></div>
+          <div class="mll">自动登录中</div>
+        </div>
       </div>
     </div>
     <div class="login-switch-language">
@@ -176,6 +195,7 @@ import {
   ElCarousel,
   ElCarouselItem,
   ElDialog,
+  ElImage,
 } from "element-plus";
 import BaseImg from "@/components/BaseImg.vue";
 import config from "./config.json";
@@ -183,23 +203,30 @@ import { encrypt } from "./encryption";
 import CyberData from "@/assets/CyberData.png";
 import CyberEngine from "@/assets/CyberEngine.png";
 import CyberAI from "@/assets/CyberAI.png";
+import logoImg from "@/assets/logo.png";
 
 const props = withDefaults(
   defineProps<{
-    title: "CyberData" | "CyberEngine" | "CyberAI" | "UserCenter";
+    productKey: "CyberData" | "CyberEngine" | "CyberAI" | "UserCenter";
     useLocale: boolean;
     baseUrl: string;
     locale?: "zh-CN" | "en-US";
-    tripartiteTitle?: string;
+    title?: string;
     logo?: string;
+    showLogo?: boolean;
+    autoLogin?: boolean;
+    autoLoginLoading?: boolean;
   }>(),
   {
-    title: "UserCenter",
+    productKey: "UserCenter",
     useLocale: true,
     baseUrl: "http://172.18.1.146:30201",
     locale: "zh-CN",
-    tripartiteTitle: "",
-    logo: "logo.png",
+    title: "",
+    logo: "",
+    showLogo: true,
+    autoLogin: false,
+    autoLoginLoading: false,
   }
 );
 
@@ -319,10 +346,10 @@ const getUserInfo = () => {
   headers.append("Content-Type", "application/json");
   headers.append("JwtToken", sessionStorage.getItem("jwtToken") || "");
   headers.append("lang", props.locale);
-  if (props.title === "UserCenter") {
+  if (props.productKey === "UserCenter") {
     headers.append("ProductKey", "CyberData,CyberEngine,CyberAI");
   } else {
-    headers.append("ProductKey", props.title);
+    headers.append("ProductKey", props.productKey);
   }
   fetch(`${props.baseUrl}/user/getUserInfo`, {
     method: "POST",
@@ -330,9 +357,9 @@ const getUserInfo = () => {
       "Content-Type": "application/json",
       JwtToken: sessionStorage.getItem("jwtToken"),
       ProductKey:
-        props.title === "UserCenter"
+        props.productKey === "UserCenter"
           ? ["CyberData", "CyberAI", "CyberEngine"]
-          : props.title,
+          : props.productKey,
       lang: props.locale,
     },
   })
@@ -379,10 +406,12 @@ const loginRequest = () => {
       if (res.code === "200") {
         const jwtToken = res?.data?.jwtToken;
         sessionStorage.setItem("jwtToken", jwtToken);
-        if (props.title !== "UserCenter") {
+        if (props.productKey !== "UserCenter") {
           emit("loginSuccess", {
-            title: props.title,
+            title: props.productKey,
             jwtToken: jwtToken,
+            loginName: loginForm.name,
+            password: loginForm.password,
           });
         } else {
           getUserInfo();
@@ -478,6 +507,13 @@ onMounted(() => {
   display: flex;
   min-height: 580px;
   font-family: PingFangSC-Regular, PingFang SC;
+  .mll {
+    margin-left: 16px;
+  }
+  .flex {
+    display: flex;
+    align-items: center;
+  }
   .login-img {
     width: 37.5%;
     height: 100%;
