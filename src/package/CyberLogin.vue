@@ -3,24 +3,16 @@
     <div class="login-img" ref="imgBox" v-if="productKey === 'UserCenter'">
       <el-carousel trigger="click" arrow="never" :interval="5000">
         <el-carousel-item v-for="el in carouselList" :key="el.title">
-          <div
-            class="login-img"
-            :style="{
-              backgroundImage: `url(${bgImg[el.title]})`,
-            }"
-          >
+          <div class="login-img">
+            <el-image :src="`${el.title}.png`" />
             <div class="title">{{ el.title }}</div>
             <div class="desc">{{ el.desc }}</div>
           </div>
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div
-      class="login-img"
-      :style="{ backgroundImage: `url(${bgImg[productKey]})` }"
-      ref="imgBox"
-      v-else
-    >
+    <div class="login-img" ref="imgBox" v-else>
+      <el-image :src="`${productKey}.png`" />
       <div class="title" v-show="showLogo">
         {{ title || productKey }}
       </div>
@@ -28,7 +20,6 @@
     </div>
     <div class="login-content">
       <div class="login-content-logo">
-        <!-- <BaseImg :src="logo" width="auto" :height="48" /> -->
         <el-image
           style="width: auto; height: 48px"
           :src="logo || logoImg"
@@ -200,9 +191,9 @@ import {
 import BaseImg from "@/components/BaseImg.vue";
 import config from "./config.json";
 import { encrypt } from "./encryption";
-import CyberData from "@/assets/CyberData.png";
-import CyberEngine from "@/assets/CyberEngine.png";
-import CyberAI from "@/assets/CyberAI.png";
+// import CyberData from "@/assets/CyberData.png";
+// import CyberEngine from "@/assets/CyberEngine.png";
+// import CyberAI from "@/assets/CyberAI.png";
 import logoImg from "@/assets/logo.png";
 
 const props = withDefaults(
@@ -285,17 +276,14 @@ const rules = ref({
 
 const carouselList = [
   {
-    img: `url('/src/assets/CyberEngine.png')`,
     title: "CyberEngine",
     desc: config[props.locale].CyberEngine.desc,
   },
   {
-    img: `url('/src/assets/CyberData.png')`,
     title: "CyberData",
     desc: config[props.locale].CyberData.desc,
   },
   {
-    img: `url('/src/assets/CyberAI.png')`,
     title: "CyberAI",
     desc: config[props.locale].CyberAI.desc,
   },
@@ -322,11 +310,11 @@ const enterList = ref([
   },
 ]);
 
-const bgImg = {
-  CyberData: CyberData,
-  CyberEngine: CyberEngine,
-  CyberAI: CyberAI,
-};
+// const bgImg = {
+//   CyberData: CyberData,
+//   CyberEngine: CyberEngine,
+//   CyberAI: CyberAI,
+// };
 
 const emit = defineEmits(["updateLanguage", "loginSuccess"]);
 
@@ -520,6 +508,10 @@ onMounted(() => {
     background: no-repeat;
     background-size: 100% 100%;
     position: relative;
+    :deep(.el-image) {
+      width: 100%;
+      height: 100%;
+    }
     :deep(.el-carousel) {
       height: 100%;
       .el-carousel__container {
