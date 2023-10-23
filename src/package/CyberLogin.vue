@@ -4,7 +4,8 @@
       <el-carousel trigger="click" arrow="never" :interval="5000">
         <el-carousel-item v-for="el in carouselList" :key="el.title">
           <div class="login-img">
-            <el-image :src="`${el.title}.png`" />
+            <!-- <el-image :src="bgImg[el.title]" /> -->
+            <BaseImg :src="`${el.title}.png`" />
             <div class="title">{{ el.title }}</div>
             <div class="desc">{{ el.desc }}</div>
           </div>
@@ -12,7 +13,8 @@
       </el-carousel>
     </div>
     <div class="login-img" ref="imgBox" v-else>
-      <el-image :src="`${productKey}.png`" />
+      <!-- <el-image :src="bgImg[productKey]" /> -->
+      <BaseImg :src="`${productKey}.png`" />
       <div class="title" v-show="showLogo">
         {{ title || productKey }}
       </div>
@@ -20,6 +22,7 @@
     </div>
     <div class="login-content">
       <div class="login-content-logo">
+        <!-- <BaseImg :src="logo" width="auto" :height="48" /> -->
         <el-image
           style="width: auto; height: 48px"
           :src="logo || logoImg"
@@ -191,9 +194,6 @@ import {
 import BaseImg from "@/components/BaseImg.vue";
 import config from "./config.json";
 import { encrypt } from "./encryption";
-// import CyberData from "@/assets/CyberData.png";
-// import CyberEngine from "@/assets/CyberEngine.png";
-// import CyberAI from "@/assets/CyberAI.png";
 import logoImg from "@/assets/logo.png";
 
 const props = withDefaults(
@@ -310,13 +310,9 @@ const enterList = ref([
   },
 ]);
 
-// const bgImg = {
-//   CyberData: CyberData,
-//   CyberEngine: CyberEngine,
-//   CyberAI: CyberAI,
-// };
-
 const emit = defineEmits(["updateLanguage", "loginSuccess"]);
+
+const imgBox = ref();
 
 watch(
   () => props.locale,
@@ -426,12 +422,10 @@ const goDetail = (el) => {
   window.open(url, "_self");
 };
 
-const imgBox = ref();
 onMounted(() => {
-  // const h = document.documentElement.clientHeight;
-  // const bi = 900 / h;
-  // imgBox.value.style.width = 560 / bi + "px";
-  console.log(window, "window", window.origin);
+  const h = document.documentElement.clientHeight;
+  const bi = 1200 / h;
+  imgBox.value.style.width = 800 / bi + "px";
   const url = window.origin;
   switch (url) {
     case "http://172.18.1.146:30011":
@@ -512,6 +506,11 @@ onMounted(() => {
       width: 100%;
       height: 100%;
     }
+    :deep(.base-image) {
+      width: 100% !important;
+      height: 100% !important;
+      padding: 0;
+    }
     :deep(.el-carousel) {
       height: 100%;
       .el-carousel__container {
@@ -565,6 +564,9 @@ onMounted(() => {
   .login-content {
     flex: 1;
     background: #ffffff;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
 
     .login-content-logo {
       padding: 0 30px;
@@ -579,8 +581,9 @@ onMounted(() => {
     }
 
     .login-content-form {
-      margin: 143px auto 0;
       width: 340px;
+      margin: auto;
+      transform: translateY(-42px);
 
       .form-title {
         margin-bottom: 30px;
@@ -775,13 +778,15 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-.el-popper.is-light {
-  background: #ffffff;
-  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
-  border: none;
-  .el-popper__arrow::before {
+html {
+  .el-popper.is-light {
+    background: #ffffff;
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
     border: none;
+    .el-popper__arrow::before {
+      box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+      border: none;
+    }
   }
 }
 </style>

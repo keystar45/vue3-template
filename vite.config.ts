@@ -7,7 +7,7 @@ import imagemin from "unplugin-imagemin/vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export default defineConfig({
-  plugins: [vue(), imagemin(), visualizer({ open: true })],
+  plugins: [vue(), visualizer({ open: true })],
   resolve: {
     alias: {
       "@": path.resolve("./src"), // @代替src
@@ -46,9 +46,6 @@ export default defineConfig({
         globals: {
           vue: "Vue",
         },
-        // chunkFileNames: '/assets/js/[name]-[hash].js',
-        // entryFileNames: '/assets/js/[name]-[hash].js',
-        // assetFileNames: '/assets/[ext]/[name]-[hash].[ext]',
       },
     },
   },
