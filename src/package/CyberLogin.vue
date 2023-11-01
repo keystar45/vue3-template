@@ -5,7 +5,7 @@
         <el-carousel-item v-for="el in carouselList" :key="el.title">
           <div class="login-img">
             <!-- <el-image :src="bgImg[el.title]" /> -->
-            <BaseImg :src="`${el.title}.png`" />
+            <BaseImg :src="`${el.title}.jpg`" />
             <div class="title">{{ el.title }}</div>
             <div class="desc">{{ el.desc }}</div>
           </div>
@@ -14,7 +14,7 @@
     </div>
     <div class="login-img" ref="imgBox" v-else>
       <!-- <el-image :src="bgImg[productKey]" /> -->
-      <BaseImg :src="`${productKey}.png`" />
+      <BaseImg :src="`${productKey}.jpg`" />
       <div class="title" v-show="showLogo">
         {{ title || productKey }}
       </div>
@@ -318,6 +318,14 @@ watch(
   () => props.locale,
   () => {
     window.location.reload();
+  }
+);
+
+watch(
+  () => props.autoLoginLoading,
+  (newVal) => {
+    console.log("autoLoginLoading", newVal);
+    loading.value = newVal;
   }
 );
 

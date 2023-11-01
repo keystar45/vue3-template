@@ -1,16 +1,43 @@
-# Vue 3 + TypeScript + Vite
+安装 cyber-login
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+```shell
+# 配置npm 私服
+nrm add DCnpm http://172.18.1.186:4873/
+# 切换nrm至内网
+nrm use DCnpm
 
-## Recommended IDE Setup
+npm i cyber-login
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+使用时引入
 
-## Type Support For `.vue` Imports in TS
+```shell
+import CyberLogin from "cyber-login"
+import "cyber-login/style.css";
+```
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+| **属性名**        | **说明**         | **默认值**                                                            | **默认值**                                             |
+| ----------------- | ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------ |
+| productKey        | 产品名           | "CyberData" &#124; "CyberEngine" &#124; "CyberAI" &#124; "UserCenter" | UserCenter                                             |
+| useLocale         | 是否使用国际化   | boolean                                                               | true                                                   |
+| baseUrl           | 接口请求 baseUrl | string                                                                | [http://172.18.1.146:30201](http://172.18.1.146:30201) |
+| locale            | 语言             | "zh-CN" &#124; "en-US"                                                | zh-CN                                                  |
+| title？           | 展示标题         | string                                                                | -                                                      |
+| logo？            | logo             | string                                                                | 原型 logo                                              |
+| showLogo？        | 是否展示 logo    | boolean                                                               | true                                                   |
+| autoLogin？       | 是否自动登录     | boolean                                                               | false                                                  |
+| autoLoginLoading? | 自动登录 loading | boolean                                                               | false                                                  |
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+| **事件名**     | **说明**     | **回调参数**           |
+| -------------- | ------------ | ---------------------- |
+| loginSuccess   | 登录成功回调 | loginres               |
+| updateLanguage | 切换国际化   | locale（props.locale） |
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+```
+type loginres {
+  title: string; 产品名
+  jwtToken: string; token
+  loginName: string; 用户名
+  password: string; 密码（未加密）
+}
+```
