@@ -325,7 +325,9 @@ watch(
   () => props.autoLoginLoading,
   (newVal) => {
     console.log("autoLoginLoading", newVal);
-    loading.value = newVal;
+    setTimeout(() => {
+      loading.value = newVal;
+    });
   }
 );
 
@@ -363,11 +365,10 @@ const getUserInfo = () => {
       if (res.code === "200") {
         roleList.value = res.data.version;
         if (roleList.value.length === 1) {
-          dialogVisible.value = true;
           const url = `${
             enterList.value[Number(roleList.value[0]) - 2].url
           }?jwtToken=${sessionStorage.getItem("jwtToken")}`;
-          // window.open(url, "_self");
+          window.open(url, "_self");
         } else {
           dialogVisible.value = true;
         }
