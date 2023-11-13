@@ -381,10 +381,22 @@ const getUserInfo = () => {
 
 const loginRequest = () => {
   loading.value = true;
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  headers.append("lang", props.locale);
+  if (props.productKey === "UserCenter") {
+    headers.append("ProductKey", "CyberData,CyberEngine,CyberAI");
+  } else {
+    headers.append("ProductKey", props.productKey);
+  }
   fetch(`${props.baseUrl}/auth/login`, {
     method: "POST",
-    headers: {
+    headers: headers || {
       "Content-Type": "application/json",
+      ProductKey:
+        props.productKey === "UserCenter"
+          ? ["CyberData", "CyberAI", "CyberEngine"]
+          : props.productKey,
     },
     body: JSON.stringify({
       loginName: loginForm.name,
