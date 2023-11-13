@@ -6,8 +6,10 @@
           <div class="login-img">
             <!-- <el-image :src="bgImg[el.title]" /> -->
             <BaseImg :src="`${el.title}.jpg`" />
-            <div class="title">{{ el.title }}</div>
-            <div class="desc">{{ el.desc }}</div>
+            <div class="content">
+              <div class="title">{{ el.title }}</div>
+              <div class="desc">{{ el.desc }}</div>
+            </div>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -59,16 +61,33 @@
           <el-form-item prop="password">
             <el-input
               v-model="loginForm.password"
-              type="password"
+              :type="showPwd ? 'text' : 'password'"
               autocomplete="off"
               :placeholder="config[locale].passwordP"
               :disabled="loading"
-              :show-password="true"
               @keyup.enter="Login()"
             >
               <template #prepend>
                 <svg :class="['svg']" aria-hidden="true">
                   <use :xlink:href="`#${'icon-mima'}`"></use>
+                </svg>
+              </template>
+              <template #suffix v-if="showSuffix">
+                <svg
+                  :class="['svg']"
+                  aria-hidden="true"
+                  v-if="showPwd"
+                  @click="() => (showPwd = false)"
+                >
+                  <use :xlink:href="`#${'icon-a-xiangqingchakan'}`"></use>
+                </svg>
+                <svg
+                  :class="['svg']"
+                  aria-hidden="true"
+                  v-else
+                  @click="() => (showPwd = true)"
+                >
+                  <use :xlink:href="`#${'icon-yincang'}`"></use>
                 </svg>
               </template>
             </el-input>
@@ -178,7 +197,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch, reactive } from "vue";
+import { onMounted, ref, watch, reactive, computed, nextTick } from "vue";
 import {
   ElForm,
   ElFormItem,
@@ -229,6 +248,8 @@ const loginForm = reactive({
 });
 
 const loading = ref(false);
+
+const showPwd = ref(false);
 
 const dialogVisible = ref(false);
 
@@ -309,6 +330,8 @@ const enterList = ref([
     url: "",
   },
 ]);
+
+const showSuffix = computed(() => !!loginForm.password);
 
 const emit = defineEmits(["updateLanguage", "loginSuccess"]);
 
@@ -448,6 +471,9 @@ onMounted(() => {
   const bi = 1200 / h;
   imgBox.value.style.width = 800 / bi + "px";
   const url = window.origin;
+  nextTick(() => {
+    imgBox.value.click();
+  });
   switch (url) {
     case "http://172.18.1.146:30011":
       enterList.value[0].url = ceUrlObj.dev;
@@ -564,21 +590,21 @@ onMounted(() => {
       height: 27px;
       padding: 25px 39px;
     }
-    .title {
+    .content {
       position: absolute;
       left: 50px;
-      top: 120px;
-      font-size: 32px;
-      font-weight: 600;
-      color: #29344e;
-    }
-    .desc {
-      position: absolute;
-      left: 50px;
-      top: 180px;
-      font-size: 20px;
-      font-weight: 400;
-      color: #29344e;
+      top: 12%;
+      .title {
+        font-size: 32px;
+        font-weight: 600;
+        color: #29344e;
+        margin-bottom: 12px;
+      }
+      .desc {
+        font-size: 20px;
+        font-weight: 400;
+        color: #29344e;
+      }
     }
   }
 
@@ -624,25 +650,55 @@ onMounted(() => {
       :deep(.el-form) {
         .el-form-item {
           margin: 30px 0;
+          .el-input > .el-input__wrapper.is-focus {
+            border: 2px solid rgba(86, 122, 255, 0.2);
+            padding-left: 42px;
+          }
+          &.is-error {
+            .el-input > .el-input__wrapper {
+              border: 2px solid rgba(240, 93, 79, 0.2);
+              padding-left: 42px;
+            }
+          }
         }
 
         .el-input {
           background: #f2f4f9;
           width: 360px;
           max-width: none;
+          border-radius: 2px;
+          box-sizing: border-box;
+          height: 48px;
           .el-input-group__prepend {
             background: #f2f4f9;
             .svg {
               display: inline-flex;
               align-items: center;
-              width: 1em;
-              height: 1em;
+              width: 14px;
+              height: 14px;
               fill: currentColor;
               overflow: hidden;
               outline: none;
               cursor: pointer;
               flex-shrink: 0;
-              font-size: 14px;
+              font-size: 16px;
+              color: #666d80;
+            }
+          }
+          .el-input__suffix {
+            background: #f2f4f9;
+            .svg {
+              display: inline-flex;
+              align-items: center;
+              width: 14px;
+              height: 14px;
+              fill: currentColor;
+              overflow: hidden;
+              outline: none;
+              cursor: pointer;
+              flex-shrink: 0;
+              font-size: 16px;
+              color: #666d80;
             }
           }
         }
@@ -651,40 +707,42 @@ onMounted(() => {
           background: transparent;
           border: none;
           box-shadow: none;
+          padding-left: 44px;
         }
 
         .el-form-item__error {
-          padding: 3px 0 0 14px;
+          padding-top: 3px;
         }
 
         .el-input-group__prepend {
           padding: 18px 0 18px 19px;
-          height: 56px;
+          height: 44px;
           box-sizing: border-box;
           border: none;
           box-shadow: none;
-
+          position: absolute;
           img {
             width: 14px;
           }
         }
 
         .el-form-item__content .el-input .el-input__inner {
-          height: 56px;
-          line-height: 56px;
+          height: 44px;
+          line-height: 44px;
           border: none;
         }
 
         .el-form-item__content .el-button {
           width: 100%;
-          height: 56px;
-          line-height: 56px;
-          border-radius: 4px;
+          height: 48px;
+          line-height: 48px;
+          border-radius: 2px;
           border: none;
           margin-top: 20px;
           letter-spacing: 2px;
           background: rgba(71, 119, 255, 1);
           font-size: 16px;
+          box-shadow: 0px 4px 10px 0px rgba(86, 122, 255, 0.4);
         }
 
         .el-form-item__content .el-button .el-button__text--expand {
