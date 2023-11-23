@@ -17,10 +17,12 @@
     <div class="login-img" ref="imgBox" v-else>
       <!-- <el-image :src="bgImg[productKey]" /> -->
       <BaseImg :src="`${productKey}.jpg`" />
-      <div class="title" v-show="showLogo">
-        {{ title || productKey }}
+      <div class="content">
+        <div class="title" v-show="showLogo">
+          {{ title || productKey }}
+        </div>
+        <div class="desc">{{ config?.[locale]?.[productKey]?.desc }}</div>
       </div>
-      <div class="desc">{{ config?.[locale]?.[productKey]?.desc }}</div>
     </div>
     <div class="login-content">
       <div class="login-content-logo">
@@ -72,7 +74,7 @@
                   <use :xlink:href="`#${'icon-mima'}`"></use>
                 </svg>
               </template>
-              <template #suffix v-if="showSuffix">
+              <template #suffix>
                 <svg
                   :class="['svg']"
                   aria-hidden="true"
@@ -228,7 +230,7 @@ const props = withDefaults(
     autoLoginLoading?: boolean;
   }>(),
   {
-    productKey: "UserCenter",
+    productKey: "CyberData",
     useLocale: true,
     baseUrl: "http://172.18.1.146:30201",
     locale: "zh-CN",
@@ -603,7 +605,7 @@ onMounted(() => {
       .desc {
         font-size: 20px;
         font-weight: 400;
-        color: #29344e;
+        color: rgba(41, 52, 78, 0.65);
       }
     }
   }
@@ -650,14 +652,31 @@ onMounted(() => {
       :deep(.el-form) {
         .el-form-item {
           margin: 30px 0;
+          &:last-child {
+            margin-bottom: 100px;
+          }
+          .el-input > .el-input__wrapper:hover {
+            border: 1px solid rgba(86, 122, 255, 1);
+            padding-left: 47px;
+            padding-right: 10px;
+          }
           .el-input > .el-input__wrapper.is-focus {
             border: 2px solid rgba(86, 122, 255, 0.2);
-            padding-left: 42px;
+            box-shadow: 0 0 0 1px rgba(86, 122, 255, 1) inset;
+            padding-left: 46px;
+            padding-right: 9px;
           }
           &.is-error {
             .el-input > .el-input__wrapper {
-              border: 2px solid rgba(240, 93, 79, 0.2);
-              padding-left: 42px;
+              border: 1px solid rgba(240, 93, 79, 1);
+              padding-left: 47px;
+              padding-right: 10px;
+              &.is-focus {
+                box-shadow: 0 0 0 1px rgba(240, 93, 79, 1) inset !important;
+                border: 2px solid rgba(240, 93, 79, 0.2) !important;
+                padding-left: 46px;
+                padding-right: 9px;
+              }
             }
           }
         }
@@ -669,13 +688,15 @@ onMounted(() => {
           border-radius: 2px;
           box-sizing: border-box;
           height: 48px;
+          overflow: hidden;
           .el-input-group__prepend {
             background: #f2f4f9;
+            padding-left: 16px;
             .svg {
               display: inline-flex;
               align-items: center;
-              width: 14px;
-              height: 14px;
+              width: 16px;
+              height: 16px;
               fill: currentColor;
               overflow: hidden;
               outline: none;
@@ -698,7 +719,7 @@ onMounted(() => {
               cursor: pointer;
               flex-shrink: 0;
               font-size: 16px;
-              color: #666d80;
+              color: rgba(41, 52, 78, 0.4);
             }
           }
         }
@@ -707,7 +728,8 @@ onMounted(() => {
           background: transparent;
           border: none;
           box-shadow: none;
-          padding-left: 44px;
+          padding-left: 48px;
+          border-radius: 2px;
         }
 
         .el-form-item__error {
