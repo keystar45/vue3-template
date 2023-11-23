@@ -187,7 +187,8 @@
           :class="{ disabled: !roleList.includes(el.role) }"
           @click="goDetail(el)"
         >
-          <BaseImg :src="el.img" width="auto" :height="60" />
+          <div class="is-use" v-if="useProductKey === el.title">最近使用</div>
+          <BaseImg :src="el.img" width="auto" :height="80" />
           <div class="title">{{ el.title }}</div>
           <div class="recently-used" v-if="recentlyUsed === el.title">
             {{ config[locale].recentlyUsed }}
@@ -230,7 +231,7 @@ const props = withDefaults(
     autoLoginLoading?: boolean;
   }>(),
   {
-    productKey: "CyberData",
+    productKey: "UserCenter",
     useLocale: true,
     baseUrl: "http://172.18.1.146:30201",
     locale: "zh-CN",
@@ -334,6 +335,7 @@ const enterList = ref([
 ]);
 
 const showSuffix = computed(() => !!loginForm.password);
+const useProductKey = sessionStorage.getItem("productKey");
 
 const emit = defineEmits(["updateLanguage", "loginSuccess"]);
 
@@ -393,6 +395,10 @@ const getUserInfo = () => {
           const url = `${
             enterList.value[Number(roleList.value[0]) - 2].url
           }?jwtToken=${sessionStorage.getItem("jwtToken")}`;
+          sessionStorage.setItem(
+            "productKey",
+            enterList.value[Number(roleList.value[0]) - 2].title
+          );
           window.open(url, "_self");
         } else {
           dialogVisible.value = true;
@@ -464,6 +470,7 @@ const Login = () => {
 
 const goDetail = (el) => {
   if (!roleList.value.includes(el.role)) return;
+  sessionStorage.setItem("productKey", el.title);
   const url = `${el.url}?jwtToken=${sessionStorage.getItem("jwtToken")}`;
   window.open(url, "_self");
 };
@@ -508,7 +515,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 :deep(.el-input) {
   .el-input__inner {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   input:-webkit-autofill,
@@ -830,13 +837,37 @@ onMounted(() => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 32px;
+            padding-top: 22px;
             box-sizing: border-box;
             position: relative;
             cursor: pointer;
+            &:hover {
+              border-color: rgba(86, 122, 255, 1);
+            }
+            .is-use {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 48px;
+              height: 20px;
+              font-size: 12px;
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              color: #567aff;
+              line-height: 20px;
+              text-align: center;
+              border-right: 1px solid #d6dde7;
+              border-bottom: 1px solid #d6dde7;
+              border-radius: 2px;
+              padding: 0 8px;
+              background: #eef2fe;
+            }
             &.disabled {
               background: #f7f9fc;
               cursor: not-allowed;
+              &:hover {
+                border-color: #d6dde7;
+              }
               .title {
                 opacity: 0.6;
               }
@@ -848,7 +879,7 @@ onMounted(() => {
               }
             }
             .title {
-              margin-top: 28px;
+              margin-top: 18px;
               font-size: 16px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
