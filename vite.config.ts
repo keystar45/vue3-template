@@ -2,12 +2,19 @@ import vue from "@vitejs/plugin-vue";
 import path from "path";
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
+import UnpluginElementPlus from "unplugin-element-plus/vite";
 import viteCompression from "vite-plugin-compression";
 import imagemin from "unplugin-imagemin/vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export default defineConfig({
-  plugins: [vue(), visualizer({ open: true })],
+  plugins: [
+    vue(),
+    visualizer({ open: true }),
+    // UnpluginElementPlus({
+    //   ignoreComponents: ["AutoResizer"],
+    // }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve("./src"), // @代替src
